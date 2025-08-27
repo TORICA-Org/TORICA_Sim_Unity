@@ -17,7 +17,7 @@ public class SerialReceive : MonoBehaviour
     
     private SerialHandler serialHandler;
 
-    private bool isFirst = true;
+    //private bool isFirst = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -42,7 +42,7 @@ public class SerialReceive : MonoBehaviour
                 massBackwardLeftNow = ExtractFromData(data[0],3);
                 JoyStickNow = ExtractFromData(data[0],4);
 
-                if(MyGameManeger.instance.FrameUseable && MyGameManeger.instance.JoyStickFirst){
+                if(MyGameManeger.instance.FrameUseable && MyGameManeger.instance.JoyStickFirst){//ジョイスティックオフセット取得処理
                     MyGameManeger.instance.JoyStick0 = JoyStickNow;
                     MyGameManeger.instance.JoyStickFirst = false;
                 }

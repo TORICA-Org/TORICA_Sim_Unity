@@ -14,7 +14,6 @@ public class AircraftVrSetting : MonoBehaviour
     {
         #if USE_STEAMVR
         VREnable = true;
-        MyGameManeger.instance.VRMode = true;
         // ここにVR用のコントローラー設定などのコードを記述
         #else
         // USE_STEAMVR シンボルが定義されていない（＝SteamVRが無効な）場合の処理
@@ -31,7 +30,6 @@ public class AircraftVrSetting : MonoBehaviour
         {
             //VRモード
             obj = Instantiate(VRModeObjects, new Vector3(VRModeObjects.transform.position.x,VRModeObjects.transform.position.y,VRModeObjects.transform.position.z), Quaternion.identity);
-            Debug.Log(VRModeObjects.transform.position.y);
             NonVRModeObjects.SetActive(false);
             obj.transform.parent = MyGameManeger.instance.Plane.transform;
             obj.transform.localPosition = new Vector3(obj.transform.position.x,obj.transform.position.y,obj.transform.position.z);

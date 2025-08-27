@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -83,3 +84,4 @@ public class FrameInitialization : SerialReceive
         StartCoroutine(SetZero(0));
     }
 }
+*/
