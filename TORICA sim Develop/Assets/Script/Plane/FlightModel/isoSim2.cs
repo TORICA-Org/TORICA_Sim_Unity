@@ -101,7 +101,7 @@ public class isoSim2 : AerodynamicCalculator
 
         // Wing and Tail
         CLw = CLw0+aw*(alpha-alpha0);
-        CLt = CLt0+at*((alpha-alpha0)+(1f-CGE*(CLw/CLw0))*epsilon0+de*tau+((lt-dh*cMAC)/Airspeed)*q);
+        CLt = CLt0+at*((alpha+MyGameManeger.instance.TailSetDeg-alpha0)+(1f-CGE*(CLw/CLw0))*epsilon0+de*tau+((lt-dh*cMAC)/Airspeed)*q);
         if(Mathf.Abs(CLw)>CLMAX){CLw = (CLw/Mathf.Abs(CLw))*CLMAX;} // Stall
         if(Mathf.Abs(CLt)>CLMAX){CLt = (CLt/Mathf.Abs(CLt))*CLMAX;} // Stall
 

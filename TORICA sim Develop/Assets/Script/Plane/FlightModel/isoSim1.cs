@@ -89,7 +89,9 @@ public class isoSim1 : AerodynamicCalculator
         // Calculate angles
         Airspeed =    Mathf.Sqrt((u+ug)*(u+ug) + (v+vg)*(v+vg)+(w+wg)*(w+wg));
         Groundspeed = Mathf.Sqrt(u*u + v*v);
-        ALT = SensorPoint.transform.position.y;
+        if(SensorPoint != null){
+            ALT = SensorPoint.transform.position.y;
+        }
         //Debug.Log(Groundspeed);
         alpha = Mathf.Atan((w+wg)/(u+ug))*Mathf.Rad2Deg;
         //Debug.Log(alpha);
@@ -98,7 +100,7 @@ public class isoSim1 : AerodynamicCalculator
 
         // Wing and Tail
         CLw = CLw0+aw*(alpha-alpha0);
-        CLt = CLt0+at*((alpha-alpha0)+(1f-CGE*(CLw/CLw0))*epsilon0+de*tau+((lt-dh*cMAC)/Airspeed)*q);
+        CLt = CLt0+at*((alpha+MyGameManeger.instance.TailSetDeg-alpha0)+(1f-CGE*(CLw/CLw0))*epsilon0+de*tau+((lt-dh*cMAC)/Airspeed)*q);
         if(Mathf.Abs(CLw)>CLMAX){CLw = (CLw/Mathf.Abs(CLw))*CLMAX;} // Stall
         if(Mathf.Abs(CLt)>CLMAX){CLt = (CLt/Mathf.Abs(CLt))*CLMAX;} // Stall
 

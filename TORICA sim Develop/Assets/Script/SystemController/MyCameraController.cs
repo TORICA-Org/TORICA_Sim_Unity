@@ -38,9 +38,13 @@ public class MyCameraController : MonoBehaviour
             if(MyGameManeger.instance.VRMode){
                 FPSCamera = MyGameManeger.instance.Plane.transform.Find("VR_Item(Clone)/[CameraRig]/FPSCamera").gameObject.GetComponent<Camera>();
                 VRModeNow = MyGameManeger.instance.VRMode;
+                TPSCamera.enabled = !MyGameManeger.instance.CameraSwitch;
+                FPSCamera.enabled = MyGameManeger.instance.CameraSwitch;
             }else{
                 FPSCamera = MyGameManeger.instance.Plane.transform.Find("FPSCamera").gameObject.GetComponent<Camera>();
                 VRModeNow = MyGameManeger.instance.VRMode;
+                TPSCamera.enabled = !MyGameManeger.instance.CameraSwitch;
+                FPSCamera.enabled = MyGameManeger.instance.CameraSwitch;
             }
         }
 

@@ -68,14 +68,20 @@ public class Speaker : MonoBehaviour
             if(!MyGameManeger.instance.TakeOff){
                 interval = 1.0f;
             }
-            else if(script.ALT > 1f){
+            else if(script.ALT > 1.5f){
                 interval = 0.9f;
             }
             else if(script.ALT > 0.3f){
-                interval = 0.001f*(float)Math.Round(125f + 675f * script.ALT, 0,  MidpointRounding.AwayFromZero);
+                //interval = 0.001f*(float)Math.Round(125f + 675f * script.ALT, 0,  MidpointRounding.AwayFromZero);
+                //interval = 0.001f * (float)Math.Round(125f + 450f * script.ALT, 0, MidpointRounding.AwayFromZero);
+                // valueには0から1.5の値が入る
+                interval = 0.001f * (float)Math.Round(125f + (1150f / 3f) * script.ALT, 0, MidpointRounding.AwayFromZero);
             }
             else {
-                interval = 0.001f*(float)Math.Round(125f + 675f * script.ALT, 0,  MidpointRounding.AwayFromZero);
+                //interval = 0.001f*(float)Math.Round(125f + 675f * script.ALT, 0,  MidpointRounding.AwayFromZero);
+                //interval = 0.001f * (float)Math.Round(125f + 450f * script.ALT, 0, MidpointRounding.AwayFromZero);
+                // valueには0から1.5の値が入る
+                interval = 0.001f * (float)Math.Round(125f + (1150f / 3f) * script.ALT, 0, MidpointRounding.AwayFromZero);
             }
         }
     }

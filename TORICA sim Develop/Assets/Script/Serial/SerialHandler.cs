@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class SerialHandler : MonoBehaviour
 {
-    public Text text;//通信状況を伝えるテキスト
-    public InputField inputField;//ポート番号入力フィールド
+    [SerializeField] private Text text;//通信状況を伝えるテキスト
+    [SerializeField] private InputField inputField;//ポート番号入力フィールド
     private bool Connection;
     private bool refresh;
     private bool frameError;

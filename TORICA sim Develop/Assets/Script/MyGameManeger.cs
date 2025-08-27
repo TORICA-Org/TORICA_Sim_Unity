@@ -30,6 +30,7 @@ public class MyGameManeger : MonoBehaviour
     [System.NonSerialized] public Vector3 PlatformPosition = new Vector3(0f,10.5f,0f);
     [System.NonSerialized] public float StartRotation=0.0f;
     [System.NonSerialized] public float TailRotation=0.0f;
+    [System.NonSerialized] public float TailSetDeg=-1.0f;
     [System.NonSerialized] public float FieldOfView=90;
     //ロードセルのオフセット値
     [System.NonSerialized] public float massLeft0=0;
@@ -44,8 +45,9 @@ public class MyGameManeger : MonoBehaviour
     [System.NonSerialized] public float massBackwardLeftFactor=1;
     [System.NonSerialized] public float DefaultFactor = 0.625f;
     //ジョイスティックの調整用係数(この係数をジョイスティックの値に割る)
-    [System.NonSerialized] public float JoyStickFactor = 500;
+    [System.NonSerialized] public float JoyStickFactor = 450;
     [System.NonSerialized] public bool JoyStickFirst = true;
+    [System.NonSerialized] public float pilotMassReal = 0f;
     //エアデータ保存リスト
     [System.NonSerialized] public List<float> AirSpeedList = new List<float>();
     [System.NonSerialized] public List<float> AltList = new List<float>();
