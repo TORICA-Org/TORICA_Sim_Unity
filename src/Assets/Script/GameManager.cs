@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized] public bool CgeRand = false;
     [System.NonSerialized] public float CgeRandValue = 0;
 
-    // ===== Updateよりも早くに実行される ==============
+    // ===== このインスタンスがロードされたときに実行される ==============
     private void Awake()
     {
         if (instance == null)
@@ -130,6 +130,22 @@ public class GameManager : MonoBehaviour
             GameManager.instance.FirstLoad = false;
             Destroy(this.gameObject);
         }
-        GameManager.instance.EnterFlight = false;
+    }
+
+    // ===== Updateの初回呼び出し前に実行される =============
+    private void Start()
+    {
+        // 
+    }
+
+    // ===== 毎フレーム実行される ==============
+    private void Update()
+    {
+        // ----- ゲームの状態を管理 -----
+    }
+
+    public void Execute()
+    {
+        // ----- ゲームの進行に関わる実行は関数による -----
     }
 }

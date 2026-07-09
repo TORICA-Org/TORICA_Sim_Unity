@@ -23,12 +23,12 @@ public class LoadSceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // "ResetButton"は Input Manager に設定されている.
         if(Input.GetMouseButton(2) || Input.GetButtonDown("ResetButton") || (OnJoyStickReset && 0.5f <= ((script.JoyStickNow-GameManager.instance.JoyStick0)/GameManager.instance.JoyStickFactor) && ((script.JoyStickNow-GameManager.instance.JoyStick0)/GameManager.instance.JoyStickFactor) <= 1.0f)){
-            if(GameManager.instance.EnterFlight){
-                GameManager.instance.SettingMode = 0;
-            }
             Time.timeScale=1f;
             OnJoyStickReset = false;
+            GameManager.instance.EnterFlight = false;
+            GameManager.instance.SettingMode = 0;
             SceneManager.LoadScene("FlightScene");
         }
 

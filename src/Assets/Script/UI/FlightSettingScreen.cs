@@ -82,13 +82,13 @@ public class FlightSettingScreen
 
         DynamicText<float> valueForwardLength = new(connection, "valueForwardLength", () => { return gm.lengthForward; });
         RectTransform rectValueForwardLength = valueForwardLength.rectTransform;
-        rectValueForwardLength.anchoredPosition = new Vector2(200, -60);
+        rectValueForwardLength.anchoredPosition = new Vector2(240, -60);
         rectValueForwardLength.pivot = new Vector2(0f, 0.5f); // ピボット（ボタン自身の基準点）
         rectValueForwardLength.localScale = new Vector3(0.5f, 0.5f, 1f); // テキストのサイズを変更する
 
         DynamicText<float> valueBackwardLength = new(connection, "valueBackwardLength", () => { return gm.lengthBackward; });
         RectTransform rectValueBackwardLength = valueBackwardLength.rectTransform;
-        rectValueBackwardLength.anchoredPosition = new Vector2(200, -100);
+        rectValueBackwardLength.anchoredPosition = new Vector2(240, -100);
         rectValueBackwardLength.pivot = new Vector2(0f, 0.5f); // ピボット（ボタン自身の基準点）
         rectValueBackwardLength.localScale = new Vector3(0.5f, 0.5f, 1f);
 

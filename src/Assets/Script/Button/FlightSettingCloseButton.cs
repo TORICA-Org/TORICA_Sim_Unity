@@ -24,6 +24,8 @@ public class FlightSettingCloseButton : MonoBehaviour
 
     public void OnClick()
     {
+        Debug.Log("FlightSettingCloseButton clicked!");
+        Debug.Log($"EnterFlight: {GameManager.instance.EnterFlight}");
         if (!GameManager.instance.EnterFlight)
         {
             GameManager.instance.EnterFlight = true;

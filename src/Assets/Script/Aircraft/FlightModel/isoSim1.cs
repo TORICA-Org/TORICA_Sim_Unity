@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class isoSim1 : AerodynamicCalculator
 {
+    /*
     public override void FlightModelStart()
     {
         Debug.Log("isoSim1");
@@ -253,4 +254,5 @@ public class isoSim1 : AerodynamicCalculator
         theta = -Mathf.Asin(C12) * Mathf.Rad2Deg;
         psi = -Mathf.Atan(-C13 / C11) * Mathf.Rad2Deg;
     }
+    */
 }
