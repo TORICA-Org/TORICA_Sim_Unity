@@ -20,7 +20,7 @@ public static class Config
         // クラス内の共通処理メソッドを呼ぶ
         Flush();
 
-        // 値が更新されたので true を返す
+        // 値が更新されたら true を返す
         return true;
     }
 
@@ -93,6 +93,22 @@ public static class Config
     {
         get => mouseSensitivity;
         set => SetProperty(ref mouseSensitivity, value);
+    }
+
+    private static readonly float defaultRudderZero = 7500.0f;
+    private static float rudderZero = defaultRudderZero;
+    public static float RudderZero
+    {
+        get => rudderZero;
+        set => SetProperty(ref rudderZero, value);
+    }
+
+    private static readonly float defaultRudderMax = 7722.2f;
+    private static float rudderMax = defaultRudderMax;
+    public static float RudderMax
+    {
+        get => rudderMax;
+        set => SetProperty(ref rudderMax, value);
     }
 
     private static readonly bool defaultExportLog = false;
@@ -194,8 +210,8 @@ public static class Config
     // ファイルシステムの変更を監視する`FileSystemWatcher`.
     private static FileSystemWatcher watcher;
 
-    // 最後に同期した時間を記録する変数（クラスのメンバとして定義）
-    private static DateTime _lastSyncTime = DateTime.MinValue;
+    // 最後に書き込みをおこなった時間を記録する変数（クラスのメンバとして定義）
+    private static DateTime _lastFlushTime = DateTime.MinValue;
 
     // `ConfigIO`クラスのインスタンス.
     private static readonly int recordNum = 100; // インスタンスで扱える行数を指定.
@@ -214,10 +230,11 @@ public static class Config
         // ファイルが変更されたときのイベントハンドラーを登録.
         watcher.Changed += (sender, e) =>
         {
+            Debug.Log("Config change detected.");
             // 前回の同期から 1000ミリ秒（1秒）以内の連続呼び出しは無視する
-            if ((DateTime.Now - _lastSyncTime).TotalMilliseconds < 1000)
+            if ((DateTime.Now - _lastFlushTime).TotalMilliseconds < 1000) {
                 return;
-            _lastSyncTime = DateTime.Now; // 最後に検知した時間を「今」に更新
+            }
             Sync(); // 同期を実行
         };
 
@@ -245,6 +262,7 @@ public static class Config
             },
             null
         );
+        Debug.Log("Config synced.");
     }
 
     // ===== 設定を`Config.txt`から読み込む ================================================
@@ -269,6 +287,8 @@ public static class Config
             mainCamera = CheckContent("MainCamera", defaultMainCamera);
             useMousePitchControl = CheckContent("UseMousePitchControl", defaultUseMousePitchControl);
             mouseSensitivity = CheckContent("MouseSensitivity", defaultMouseSensitivity);
+            rudderZero = CheckContent("RudderZero", defaultRudderZero);
+            rudderMax = CheckContent("RudderMax", defaultRudderMax);
             exportLog = CheckContent("ExportLog", defaultExportLog);
             randomizeWind = CheckContent("RandomizeWind", defaultRandomizeWind);
             windMagnitude = CheckContent("WindMagnitude", defaultWindMagnitude);
@@ -385,6 +405,14 @@ public static class Config
         addConfig("MouseSensitivity", MouseSensitivity.ToString("0.0"));
         newLine();
 
+        addString($"ニュートラルにおけるラダー入力値(初期値: {defaultRudderZero:0.0})");
+        addConfig("RudderZero", RudderZero.ToString("0.0"));
+        newLine();
+
+        addString($"最大入力におけるラダー入力値(初期値: {defaultRudderMax:0.0})");
+        addConfig("RudderMax", RudderMax.ToString("0.0"));
+        newLine();
+
         addString("フライトログの出力を有効化する(True/False)");
         addConfig("ExportLog", ExportLog.ToString());
         newLine();
@@ -430,13 +458,15 @@ public static class Config
         try
         {
             config.Flush(_configFilePath); // 変更されたファイルの内容を再度書き込み.
-            Debug.Log("Config file synced.");
+            Debug.Log("Config file flushed.");
         }
         catch (Exception ex)
         {
             Debug.LogError($"Failed to sync config file: {ex.Message}");
             return false;
         }
+
+        _lastFlushTime = DateTime.Now; // 最後に書き込みをおこなった時間を現在時刻に更新
 
         return true;
     }
