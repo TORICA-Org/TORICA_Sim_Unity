@@ -32,14 +32,17 @@ RudderZero = 7500.0
 // 最大入力におけるラダー入力値(初期値: 7722.2)
 RudderMax = 7722.2
 
+// ラダー入力値の反転(初期値: False)
+RudderReverse = False
+
 // フライトログの出力を有効化する(True/False)
 ExportLog = False
 
 // 風速[m/s](初期値: 0.0)
-WindMagnitude = 4.8
+WindMagnitude = 3.4
 
 // 風上[deg](範囲: [L]-180.0 ↔ [R]180.0) / 初期値: 0.0
-WindDirection = 90.0
+WindDirection = -105.0
 
 // 風の範囲指定(※「風速」「風上」の設定を上書きします / 初期値: None)
 // 以下の形式に従って入力してください（数値範囲はマイクラと同様）:
@@ -64,9 +67,6 @@ TakeoffYaw = 0.0
 
 // 定常風をランダム化する(True/False)
 RandomizeWind = True
-
-
-
 
 
 
