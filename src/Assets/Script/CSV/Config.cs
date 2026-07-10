@@ -111,6 +111,14 @@ public static class Config
         set => SetProperty(ref rudderMax, value);
     }
 
+    private static readonly bool defaultRudderReverse = false;
+    private static bool rudderReverse = defaultRudderReverse;
+    public static bool RudderReverse
+    {
+        get => rudderReverse;
+        set => SetProperty(ref rudderReverse, value);
+    }
+
     private static readonly bool defaultExportLog = false;
     private static bool exportLog = defaultExportLog;
     public static bool ExportLog
@@ -289,6 +297,7 @@ public static class Config
             mouseSensitivity = CheckContent("MouseSensitivity", defaultMouseSensitivity);
             rudderZero = CheckContent("RudderZero", defaultRudderZero);
             rudderMax = CheckContent("RudderMax", defaultRudderMax);
+            rudderReverse = CheckContent("RudderReverse", defaultRudderReverse);
             exportLog = CheckContent("ExportLog", defaultExportLog);
             randomizeWind = CheckContent("RandomizeWind", defaultRandomizeWind);
             windMagnitude = CheckContent("WindMagnitude", defaultWindMagnitude);
@@ -411,6 +420,10 @@ public static class Config
 
         addString($"最大入力におけるラダー入力値(初期値: {defaultRudderMax:0.0})");
         addConfig("RudderMax", RudderMax.ToString("0.0"));
+        newLine();
+
+        addString($"ラダー入力値の反転(初期値: {defaultRudderReverse})");
+        addConfig("RudderReverse", RudderReverse.ToString());
         newLine();
 
         addString("フライトログの出力を有効化する(True/False)");

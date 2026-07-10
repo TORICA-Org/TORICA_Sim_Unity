@@ -445,6 +445,10 @@ public class AerodynamicCalculator : SerialReceive
             //↓必要な処理
             // dr = ((JoyStickNow - gm.JoyStick0) / gm.JoyStickFactor) * drMAX * gm.RudderRandValue;
             float rudderSlope = (1 - 0)/(Config.RudderMax - Config.RudderZero); // 傾き(0~1)/(ラダー変化量)
+            if (Config.RudderReverse)
+            {
+                rudderSlope *= -1; // 傾きを負に反転
+            }
             float drRatio = rudderSlope * (JoyStickNow - Config.RudderZero); // ラダー入力の割合(0~1)
             dr = drMAX * drRatio; // ラダー駆動角
         }
