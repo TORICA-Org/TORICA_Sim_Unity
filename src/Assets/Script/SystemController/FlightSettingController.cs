@@ -11,6 +11,7 @@ public class FlightSettingController : MonoBehaviour
     private SaveCsvScript SaveCsvScript;
     private AerodynamicCalculator script;//AerodynamicCalculatorスクリプトにアクセスするための変数
     private bool OnStartTrigger;
+    private GameManager gm = GameManager.instance;
 
     // Start is called before the first frame update
     
@@ -33,9 +34,9 @@ public class FlightSettingController : MonoBehaviour
 
     void Update()
     {
-        if(-0.5f >= ((script.JoyStickNow-GameManager.instance.JoyStick0)/GameManager.instance.JoyStickFactor) && ((script.JoyStickNow-GameManager.instance.JoyStick0)/GameManager.instance.JoyStickFactor) >= -1.0f && !GameManager.instance.EnterFlight){
-            OnStartTrigger = true;
-        }
+        // if(-0.5f >= ((gm.serial.rudderRaw-GameManager.instance.JoyStick0)/GameManager.instance.JoyStickFactor) && ((gm.serial.rudderRaw-GameManager.instance.JoyStick0)/GameManager.instance.JoyStickFactor) >= -1.0f && !GameManager.instance.EnterFlight){
+            // OnStartTrigger = true;
+        // }
 
         if( (Input.GetButtonDown("StartButton") || OnStartTrigger) && !GameManager.instance.EnterFlight){
             GameManager.instance.EnterFlight = true;
@@ -43,7 +44,7 @@ public class FlightSettingController : MonoBehaviour
             FlightSetting.SetActive(GameManager.instance.FlightSettingActive);
             Time.timeScale=(float)Convert.ToInt32(!GameManager.instance.FlightSettingActive & !GameManager.instance.Landing);
             SaveCsvScript.SetFile();
-            OnStartTrigger = false;
+            // OnStartTrigger = false;
         }
     }
 }

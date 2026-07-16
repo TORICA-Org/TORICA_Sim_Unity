@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,3 +29,4 @@ public class SerialSend : MonoBehaviour
         frameNumber++;//0.02秒経過
     }
 }
+*/

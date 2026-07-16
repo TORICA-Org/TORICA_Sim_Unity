@@ -92,6 +92,20 @@ public class FlightSettingScreen
         rectValueBackwardLength.pivot = new Vector2(0f, 0.5f); // ピボット（ボタン自身の基準点）
         rectValueBackwardLength.localScale = new Vector3(0.5f, 0.5f, 1f);
 
+        DynamicText<string> serialStatus = new(connection, "serialStatus", () => { return gm.serial.status; });
+        RectTransform rectSerialStatus = serialStatus.rectTransform;
+        rectSerialStatus.anchoredPosition = new Vector2(-175, 110);
+        rectSerialStatus.pivot = new Vector2(0f, 0.5f); // ピボット（ボタン自身の基準点）
+        rectSerialStatus.localScale = new Vector3(0.7f, 0.7f, 1f); // テキストのサイズを変更する
+
+
+        DynamicText<string> serialPort = new(connection, "serialPort", () => { return Config.SerialPort; });
+        RectTransform rectSerialPort = serialPort.rectTransform;
+        rectSerialPort.anchoredPosition = new Vector2(-175, 90);
+        rectSerialPort.pivot = new Vector2(0f, 0.5f); // ピボット（ボタン自身の基準点）
+        rectSerialPort.localScale = new Vector3(0.7f, 0.7f, 1f); // テキストのサイズを変更する
+
+
         DynamicSlider lengthForward = new(connection, "sliderForwardLength",
             (x) => { gm.lengthForward = x; }, () => { return gm.lengthForward; }, 0f, 1.0f, 0.01f);
         RectTransform rectForwardLength = lengthForward.rectTransform;

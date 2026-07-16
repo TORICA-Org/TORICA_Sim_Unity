@@ -42,7 +42,7 @@ public class PreFlightScreen
         staticRect.anchorMax = new Vector2(0, 0.5f); // アンカーの最大値
         staticRect.pivot = new Vector2(0, 0.5f); // ピボット（ボタン自身の基準点）
 
-        DynamicText<float> dynamicText = new(scrollContent, "TextDistUpper", () => { return gm.massLeftFactor; });
+        DynamicText<float> dynamicText = new(scrollContent, "TextDistUpper", () => { return gm.massBackwardFactor; });
         GameObject textObj = dynamicText.gameObject;
         RectTransform textRect = dynamicText.rectTransform;
         textRect.localScale = new Vector3(3, 3, 1); // テキストのサイズを変更する
@@ -58,28 +58,28 @@ public class PreFlightScreen
         dpdnRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 300); // RectTransformのx軸方向のサイズを変更する
 
         DynamicInputField<float> input = new(scrollContent, "InputTest", "Input Value!!!",
-            (x) => { gm.massLeftFactor = x; }, () => { return gm.massLeftFactor; });
+            (x) => { gm.massBackwardFactor = x; }, () => { return gm.massBackwardFactor; });
         RectTransform inputRect = input.rectTransform;
         inputRect.anchorMin = new Vector2(0.5f, 0.5f);
         inputRect.anchorMax = new Vector2(0.5f, 0.5f);
         inputRect.localScale = new Vector3(2, 2, 1);
 
         DynamicSlider slider = new(scrollContent, "SliderTestUpper",
-            (x) => { gm.massLeftFactor = x; }, () => { return gm.massLeftFactor; }, 0.0f, 1.0f, 0.1f);
+            (x) => { gm.massBackwardFactor = x; }, () => { return gm.massBackwardFactor; }, 0.0f, 1.0f, 0.1f);
         GameObject sliderObj = slider.gameObject;
         RectTransform sliderRect = slider.rectTransform;
         sliderRect.anchoredPosition = new Vector2(300, 200);
         sliderRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 300); // RectTransformのx軸方向のサイズを変更する
 
-        DynamicText<float> dynamicText1 = new(scrollContent, "TextDistLower", () => { return gm.massRightFactor; }, 50.0f);
+        DynamicText<float> dynamicText1 = new(scrollContent, "TextDistLower", () => { return gm.massForwardFactor; }, 50.0f);
         dynamicText1.rectTransform.anchoredPosition = new Vector2(0, 100);
 
         DynamicSlider slider1 = new(scrollContent, "SliderTestLower",
-            (x) => { gm.massLeftFactor = x; }, () => { return gm.massLeftFactor; }, 0.0f, 1.0f, 0.1f);
+            (x) => { gm.massBackwardFactor = x; }, () => { return gm.massBackwardFactor; }, 0.0f, 1.0f, 0.1f);
         slider1.rectTransform.anchoredPosition = new Vector2(300, 100);
 
         DynamicSlider slider2 = new(scrollContent, "SliderTestLower",
-            (x) => { gm.massLeftFactor = x; }, () => { return gm.massLeftFactor; }, 0.0f, 1.0f, 0.1f);
+            (x) => { gm.massBackwardFactor = x; }, () => { return gm.massBackwardFactor; }, 0.0f, 1.0f, 0.1f);
         slider2.rectTransform.anchoredPosition = new Vector2(300, -500);
     }
 

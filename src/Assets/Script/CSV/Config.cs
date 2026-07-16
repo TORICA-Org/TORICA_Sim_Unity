@@ -95,6 +95,14 @@ public static class Config
         set => SetProperty(ref mouseSensitivity, value);
     }
 
+    private static readonly string defaultSerialPort = "COM1";
+    private static string serialPort = defaultSerialPort;
+    public static string SerialPort
+    {
+        get => serialPort;
+        set => SetProperty(ref serialPort, value);
+    }
+
     private static readonly float defaultRudderZero = 7500.0f;
     private static float rudderZero = defaultRudderZero;
     public static float RudderZero
@@ -295,6 +303,7 @@ public static class Config
             mainCamera = CheckContent("MainCamera", defaultMainCamera);
             useMousePitchControl = CheckContent("UseMousePitchControl", defaultUseMousePitchControl);
             mouseSensitivity = CheckContent("MouseSensitivity", defaultMouseSensitivity);
+            serialPort = CheckContent("SerialPort", defaultSerialPort);
             rudderZero = CheckContent("RudderZero", defaultRudderZero);
             rudderMax = CheckContent("RudderMax", defaultRudderMax);
             rudderReverse = CheckContent("RudderReverse", defaultRudderReverse);
@@ -412,6 +421,11 @@ public static class Config
 
         addString($"マウス感度を設定する(初期値: {defaultMouseSensitivity:0.0})");
         addConfig("MouseSensitivity", MouseSensitivity.ToString("0.0"));
+        newLine();
+
+        addString($"シリアルポートの名前");
+        addString($"(Windowsでは`COM1`など，Macでは`/dev/tty.usbmodem1421`など)");
+        addConfig("SerialPort", SerialPort);
         newLine();
 
         addString($"ニュートラルにおけるラダー入力値(初期値: {defaultRudderZero:0.0})");
