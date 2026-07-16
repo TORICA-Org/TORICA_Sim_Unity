@@ -5,7 +5,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class Params
+public class AerodynamicParameters
 {
     public enum GameStatus {
         Preparation,
@@ -13,5 +13,5 @@ public static class Params
         Splashdown,
         Pause,
     }
-    public static GameStatus Status = GameStatus.Preparation;
+    public GameStatus Status = GameStatus.Preparation;
 }

@@ -26,6 +26,10 @@ UseMousePitchControl = False
 // マウス感度を設定する(初期値: 1.0)
 MouseSensitivity = 1.0
 
+// シリアルポートの名前
+// (Windowsでは`COM1`など，Macでは`/dev/tty.usbmodem1421`など)
+SerialPort = COM25
+
 // ニュートラルにおけるラダー入力値(初期値: 7500.0)
 RudderZero = 7500.0
 
@@ -39,10 +43,10 @@ RudderReverse = False
 ExportLog = False
 
 // 風速[m/s](初期値: 0.0)
-WindMagnitude = 3.4
+WindMagnitude = 2.8
 
 // 風上[deg](範囲: [L]-180.0 ↔ [R]180.0) / 初期値: 0.0
-WindDirection = -105.0
+WindDirection = 120.0
 
 // 風の範囲指定(※「風速」「風上」の設定を上書きします / 初期値: None)
 // 以下の形式に従って入力してください（数値範囲はマイクラと同様）:
@@ -67,10 +71,6 @@ TakeoffYaw = 0.0
 
 // 定常風をランダム化する(True/False)
 RandomizeWind = True
-
-
-
-
 
 
 
