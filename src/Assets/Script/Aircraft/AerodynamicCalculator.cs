@@ -311,7 +311,7 @@ public class AerodynamicCalculator : MonoBehaviour
             centerOfMass = (gm.CenterOfMassErrorValue + ((centerOfMassPilotRaw * massPilot) + (centerOfMassAircraft * massAircraft)) / PlaneRigidbody.mass) * gm.CenterOfMassRandValue;
         }
 
-        if (gm.serial.Available)//フレームコントロール
+        if (SerialHandler.Available)//フレームコントロール
         {
             /*
             massLeftNow = 20000f;
@@ -325,8 +325,8 @@ public class AerodynamicCalculator : MonoBehaviour
             //mass~ ←NowにFactorの値をかけて計算に使用する値
 
             // マイコン側でkgに変換する
-            massForward = gm.massForwardFactor * (gm.serial.massForwardRaw);
-            massBackward = gm.massBackwardFactor * (gm.serial.massBackwardRaw);
+            massForward = gm.massForwardFactor * (SerialHandler.massForwardRaw);
+            massBackward = gm.massBackwardFactor * (SerialHandler.massBackwardRaw);
 
             // massLeft = gm.massLeftFactor*(massLeftNow/1000);
             // massBackwardLeft = gm.massBackwardLeftFactor*(massBackwardLeftNow/1000);
@@ -429,7 +429,7 @@ public class AerodynamicCalculator : MonoBehaviour
         de = 0.000f;
         dr = 0.000f;
 
-        if (!gm.serial.Available)
+        if (!SerialHandler.Available)
         {
             de = Input.GetAxisRaw("Vertical") * deMAX;
             dr = -Input.GetAxisRaw("Horizontal") * drMAX * gm.RudderRandValue;
@@ -442,11 +442,11 @@ public class AerodynamicCalculator : MonoBehaviour
             dr = -Input.GetAxisRaw("Trigger") * drMAX * gm.RudderRandValue;
         }
 
-        if (gm.serial.Available)
+        if (SerialHandler.Available)
         {
             //↓必要な処理
             // dr = ((JoyStickNow - gm.JoyStick0) / gm.JoyStickFactor) * drMAX * gm.RudderRandValue;
-            dr = drMAX * gm.serial.rudder; // ラダー駆動角
+            dr = drMAX * SerialHandler.rudder; // ラダー駆動角
             // Debug.Log($"dr: {dr}");
         }
 
@@ -470,7 +470,7 @@ public class AerodynamicCalculator : MonoBehaviour
         }
 
         // VR Only Mode (重心センサーを使う場合は使用しない)
-        if (gm.VRMode && !gm.serial.Available)
+        if (gm.VRMode && !SerialHandler.Available)
         {
             massPilot = 68.0f; // [kg]
 

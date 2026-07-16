@@ -95,7 +95,7 @@ public static class Config
         set => SetProperty(ref mouseSensitivity, value);
     }
 
-    private static readonly string defaultSerialPort = "COM1";
+    private static readonly string defaultSerialPort = "None";
     private static string serialPort = defaultSerialPort;
     public static string SerialPort
     {
@@ -358,7 +358,7 @@ public static class Config
     }
 
     // ===== `Config.txt`の内容を生成して書き込む ====================================
-    private static bool Flush()
+    static public bool Flush()
     {
         config.Clear();
         int linenumber = 1;
@@ -423,8 +423,9 @@ public static class Config
         addConfig("MouseSensitivity", MouseSensitivity.ToString("0.0"));
         newLine();
 
-        addString($"シリアルポートの名前");
+        addString($"シリアルポートの名前(初期値: {defaultSerialPort})");
         addString($"(Windowsでは`COM1`など，Macでは`/dev/tty.usbmodem1421`など)");
+        addString($"候補：{string.Join(", ", SerialHandler.serialPortsString)}");
         addConfig("SerialPort", SerialPort);
         newLine();
 
