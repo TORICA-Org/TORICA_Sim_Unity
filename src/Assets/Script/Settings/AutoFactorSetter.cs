@@ -20,13 +20,13 @@ public class AutoFactorSetter : MonoBehaviour
     public void OnPush()
     {
         /*
-        if(script.gm.serial.massForwardRaw != 0){GameManager.instance.massRightFactor = script.massLeftRightS/(script.gm.serial.massForwardRaw/1000);}
+        if(script.SerialHandler.massForwardRaw != 0){GameManager.instance.massRightFactor = script.massLeftRightS/(script.SerialHandler.massForwardRaw/1000);}
         else{GameManager.instance.massRightFactor = 0;}
 
         if(script.massLeftNow != 0){GameManager.instance.massLeftFactor = script.massLeftRightS/(script.massLeftNow/1000);}
         else{GameManager.instance.massLeftFactor = 0;}
 
-        if(gm.serial.massBackwardRaw != 0){GameManager.instance.massBackwardRightFactor = script.massBackwardS/(gm.serial.massBackwardRaw/1000);}
+        if(SerialHandler.massBackwardRaw != 0){GameManager.instance.massBackwardRightFactor = script.massBackwardS/(SerialHandler.massBackwardRaw/1000);}
         else{GameManager.instance.massBackwardRightFactor = 0;}
 
         if(script.massBackwardLeftNow != 0){GameManager.instance.massBackwardLeftFactor = script.massBackwardS/(script.massBackwardLeftNow/1000);}
@@ -34,16 +34,16 @@ public class AutoFactorSetter : MonoBehaviour
         */
 
         /*
-        if(script.gm.serial.massForwardRaw != 0){gm.massRightFactor = script.massLeftRightS/((script.gm.serial.massForwardRaw+script.massLeftNow)/1000);}
+        if(script.SerialHandler.massForwardRaw != 0){gm.massRightFactor = script.massLeftRightS/((script.SerialHandler.massForwardRaw+script.massLeftNow)/1000);}
         else{gm.massRightFactor = 0;}
 
-        if(script.massLeftNow != 0){gm.massLeftFactor = script.massLeftRightS/((script.gm.serial.massForwardRaw+script.massLeftNow)/1000);}
+        if(script.massLeftNow != 0){gm.massLeftFactor = script.massLeftRightS/((script.SerialHandler.massForwardRaw+script.massLeftNow)/1000);}
         else{gm.massLeftFactor = 0;}
 
-        if(gm.serial.massBackwardRaw != 0){gm.massBackwardRightFactor = script.massBackwardS/((gm.serial.massBackwardRaw+script.massBackwardLeftNow)/1000);}
+        if(SerialHandler.massBackwardRaw != 0){gm.massBackwardRightFactor = script.massBackwardS/((SerialHandler.massBackwardRaw+script.massBackwardLeftNow)/1000);}
         else{gm.massBackwardRightFactor = 0;}
 
-        if(script.massBackwardLeftNow != 0){gm.massBackwardLeftFactor = script.massBackwardS/((gm.serial.massBackwardRaw+script.massBackwardLeftNow)/1000);}
+        if(script.massBackwardLeftNow != 0){gm.massBackwardLeftFactor = script.massBackwardS/((SerialHandler.massBackwardRaw+script.massBackwardLeftNow)/1000);}
         else{gm.massBackwardLeftFactor = 0;}
         */
 
@@ -56,7 +56,7 @@ public class AutoFactorSetter : MonoBehaviour
         }
         else
         {
-            gm.massPilotReal = script.gm.serial.massForwardRaw + gm.serial.massBackwardRaw;
+            gm.massPilotReal = script.SerialHandler.massForwardRaw + SerialHandler.massBackwardRaw;
             if (gm.VRMode)
             {//HMDの質量を加算 -> 減算に修正
                 gm.massPilotReal -= 0.588f;
@@ -73,18 +73,18 @@ public class AutoFactorSetter : MonoBehaviour
             float massForward = 0f;
             if (gm.VRMode)
             {//HMDの質量を加算 -> 減算に修正
-                massForward = gm.serial.massForwardRaw - 0.588f;
+                massForward = SerialHandler.massForwardRaw - 0.588f;
             }
             else
             {
-                massForward = gm.serial.massForwardRaw;
+                massForward = SerialHandler.massForwardRaw;
             }
 
-            AerodynamicCalculator.massPilotDefault = massForward + gm.serial.massBackwardRaw;
+            AerodynamicCalculator.massPilotDefault = massForward + SerialHandler.massBackwardRaw;
         }
 
         // 重心フレーム上での桁中心モーメントについて，（前後センサにかかる荷重によるモーメント）＝（パイロットの体重によるモーメント）とし，その両辺をパイロットの体重で割った式
-        AerodynamicCalculator.centerOfMassPilotRaw = (gm.serial.massForwardRaw * gm.lengthForward + gm.serial.massBackwardRaw * gm.lengthBackward) / AerodynamicCalculator.massPilotDefault; // 補正前のパイロット重心[m]
+        AerodynamicCalculator.centerOfMassPilotRaw = (SerialHandler.massForwardRaw * gm.lengthForward + SerialHandler.massBackwardRaw * gm.lengthBackward) / AerodynamicCalculator.massPilotDefault; // 補正前のパイロット重心[m]
         Debug.Log("Raw: " + AerodynamicCalculator.centerOfMassPilotRaw);
 
         // 機体が定常であるとき，（パイロットの体重によるモーメント）+（空虚重量〈パイロットなしの機体重量〉によるモーメント）=（設計上の重心位置と全備重量によるモーメント）である.
@@ -93,7 +93,7 @@ public class AutoFactorSetter : MonoBehaviour
         // とし，その両辺をパイロットの体重で割った式
         //float centerOfMassPilotTheoretical = (-1 * AerodynamicCalculator.massAircraft * AerodynamicCalculator.centerOfMassAircraft) / gm.massPilotReal; // 定常におけるパイロット重心の理論値[m]
         float massCurrent = 0f;
-        if (gm.serial.massForwardRaw != 0f && gm.serial.massBackwardRaw != 0f)
+        if (SerialHandler.massForwardRaw != 0f && SerialHandler.massBackwardRaw != 0f)
         {
             massCurrent = AerodynamicCalculator.massPilot + AerodynamicCalculator.massAircraft;
         }
@@ -129,20 +129,20 @@ public class AutoFactorSetter : MonoBehaviour
         // Debug.Log("Front: " + script.massLeftRightS + " Rear: " + script.massBackwardS);
 
         /*
-        if (script.gm.serial.massForwardRaw != 0)
+        if (script.SerialHandler.massForwardRaw != 0)
         {
-            gm.massRightFactor = script.massLeftRightS / (script.gm.serial.massForwardRaw / 1000);
-            // Debug.Log(script.massLeftRightS + "(Front) / " + script.gm.serial.massForwardRaw + "(Rear) / 1000 = " + gm.massRightFactor);
+            gm.massRightFactor = script.massLeftRightS / (script.SerialHandler.massForwardRaw / 1000);
+            // Debug.Log(script.massLeftRightS + "(Front) / " + script.SerialHandler.massForwardRaw + "(Rear) / 1000 = " + gm.massRightFactor);
         }
         else
         {
             gm.massRightFactor = 0;
         }
 
-        if (gm.serial.massBackwardRaw != 0)
+        if (SerialHandler.massBackwardRaw != 0)
         {
-            gm.massBackwardRightFactor = script.massBackwardS / (gm.serial.massBackwardRaw / 1000);
-            // Debug.Log(script.massBackwardS + "(Front) / " + gm.serial.massBackwardRaw + "(Rear) / 1000 = " + gm.massBackwardRightFactor);
+            gm.massBackwardRightFactor = script.massBackwardS / (SerialHandler.massBackwardRaw / 1000);
+            // Debug.Log(script.massBackwardS + "(Front) / " + SerialHandler.massBackwardRaw + "(Rear) / 1000 = " + gm.massBackwardRightFactor);
         }
         else
         {

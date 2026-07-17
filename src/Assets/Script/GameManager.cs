@@ -122,7 +122,6 @@ public class GameManager : MonoBehaviour
     private GameParameters game;
     private AerodynamicParameters aero;
     private AerodynamicCalculator calc;
-    public SerialHandler serial;
     private CameraManager cm;
     private AutoFactorSetter autoFactorSetter = null;
     private GameObject FlightSetting = null;
@@ -154,16 +153,73 @@ public class GameManager : MonoBehaviour
         game = new();
         aero = new();
         //calc = new();
-        serial = new();
         // GameObject aeroObj = GameObject.Find("");
+        SerialHandler.OnHoldingPositive += () =>
+        {
+            if (timeInCurrentStatus >= IGNORE_INPUT_TIME)
+            {
+                if (game.status == GameParameters.Status.Splashdown) // 長押し＋着水
+                {
+                    Debug.Log("CMD: Reset");
+                    EnterFlight = false;
+                    SettingMode = 0;
+                    SceneManager.LoadScene("FlightScene");
+                }
+                if (game.status == GameParameters.Status.Preparation) // 正の長押し＋準備
+                {
+                    Debug.Log("CMD: Caribrate");
+                    cm.CaribrateVR();
+                    if (FlightSetting == null)
+                    {
+                        FlightSetting = GameObject.Find("FlightSetting");
+                    }
+                    if (FlightSetting != null && autoFactorSetter == null)
+                    {
+                        autoFactorSetter = FlightSetting.transform.Find("Connection/AutoFactorSetterButton").GetComponent<AutoFactorSetter>();
+                    }
+                    if (autoFactorSetter != null)
+                    {
+                        autoFactorSetter.OnPush();
+                    }
+                }
+                timeInCurrentStatus = 0.0f;
+            }
+        };
+
+        SerialHandler.OnHoldingNegative += () =>
+        {
+            if (timeInCurrentStatus >= IGNORE_INPUT_TIME)
+            {
+                if (game.status == GameParameters.Status.Splashdown) // 長押し＋着水
+                {
+                    Debug.Log("CMD: Reset");
+                    EnterFlight = false;
+                    SettingMode = 0;
+                    SceneManager.LoadScene("FlightScene");
+                }
+                if (game.status == GameParameters.Status.Preparation)
+                {
+                    Debug.Log("CMD: Start");
+                    EnterFlight = true;
+                    if (FlightSetting == null)
+                    {
+                        FlightSetting = GameObject.Find("FlightSetting");
+                    }
+                    if (FlightSetting != null)
+                    {
+                        FlightSettingActive = false;
+                        FlightSetting.SetActive(FlightSettingActive);
+                    }
+                    Time.timeScale=(float)Convert.ToInt32(!FlightSettingActive & !Landing);
+                }
+                timeInCurrentStatus = 0.0f;
+            }
+        };
     }
 
     // ===== 毎フレーム実行される ==============
     private void Update()
     {
-        serial.Update();
-
-
         GameParameters.Status prev = game.status;
         
         bool Setting = SettingActive || FlightSettingActive;
@@ -191,50 +247,6 @@ public class GameManager : MonoBehaviour
             timeInCurrentStatus += Time.unscaledDeltaTime;
         }
         // Debug.Log(timeInCurrentStatus);
-
-
-        if (timeInCurrentStatus >= IGNORE_INPUT_TIME && serial.Available) { // 現在のシーンで一定時間経過
-            if ((serial.holdingPositiveInput || serial.holdingNegativeInput) && game.status == GameParameters.Status.Splashdown) // 長押し＋着水
-            {
-                Debug.Log("CMD: Reset");
-                EnterFlight = false;
-                SettingMode = 0;
-                SceneManager.LoadScene("FlightScene");
-            }
-            if (serial.holdingPositiveInput && game.status == GameParameters.Status.Preparation)  
-            { // 正の長押し＋準備
-                Debug.Log("CMD: Caribrate");
-                cm.CaribrateVR();
-                if (FlightSetting == null)
-                {
-                    FlightSetting = GameObject.Find("FlightSetting");
-                }
-                if (FlightSetting != null && autoFactorSetter == null)
-                {
-                    autoFactorSetter = FlightSetting.transform.Find("Connection/AutoFactorSetterButton").GetComponent<AutoFactorSetter>();
-                }
-                if (autoFactorSetter != null)
-                {
-                    autoFactorSetter.OnPush();
-                }
-            }
-            if (serial.holdingNegativeInput && game.status == GameParameters.Status.Preparation)
-            { // 負の長押し＋準備
-                Debug.Log("CMD: Start");
-                EnterFlight = true;
-                if (FlightSetting == null)
-                {
-                    FlightSetting = GameObject.Find("FlightSetting");
-                }
-                if (FlightSetting != null)
-                {
-                    FlightSettingActive = false;
-                    FlightSetting.SetActive(FlightSettingActive);
-                }
-                Time.timeScale=(float)Convert.ToInt32(!FlightSettingActive & !Landing);
-                // SaveCsvScript.SetFile();
-            }
-        }
     }
 
     public void FixedUpdate()
