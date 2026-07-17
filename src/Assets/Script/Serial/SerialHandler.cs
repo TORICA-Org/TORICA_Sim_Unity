@@ -109,10 +109,10 @@ static public class SerialHandler
 
     static private bool Open()
     {
-        Debug.Log("Opening...");
+        // Debug.Log("Opening...");
         if (string.Equals(Config.SerialPort, "None"))
         {
-            Debug.Log($"No SerialPort selected.({serialPortsString})");
+            // Debug.Log($"No SerialPort selected.({serialPortsString})");
             status = $"未接続（候補：{serialPortsString}）";
             return false;
         }
@@ -258,7 +258,7 @@ static public class SerialHandler
 
     static public void Close()
     {
-        Debug.Log("Closing...");
+        // Debug.Log("Closing...");
 
         if (thread_ != null && thread_.IsAlive) {
             thread_.Join(200);

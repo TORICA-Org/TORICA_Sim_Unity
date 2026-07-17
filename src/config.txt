@@ -29,7 +29,7 @@ MouseSensitivity = 1.0
 // シリアルポートの名前(初期値: None)
 // (Windowsでは`COM1`など，Macでは`/dev/tty.usbmodem1421`など)
 // 候補：COM25
-SerialPort = None
+SerialPort = com25
 
 // ニュートラルにおけるラダー入力値(初期値: 7500.0)
 RudderZero = 7500.0

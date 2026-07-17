@@ -154,40 +154,6 @@ public class GameManager : MonoBehaviour
         aero = new();
         //calc = new();
         // GameObject aeroObj = GameObject.Find("");
-    }
-
-    // ===== 毎フレーム実行される ==============
-    private void Update()
-    {
-        GameParameters.Status prev = game.status;
-        
-        bool Setting = SettingActive || FlightSettingActive;
-        // ----- ゲームの状態を管理 -----
-        if (Setting == true && EnterFlight == false && Landing == false)
-        {
-            game.status = GameParameters.Status.Preparation;
-        }
-        else if (Setting == false && EnterFlight == true && Landing == false)
-        {
-            game.status = GameParameters.Status.Flight;
-        }
-        else if (Setting == false && EnterFlight == true && Landing == true)
-        {
-            game.status = GameParameters.Status.Splashdown;
-        }
-
-        if (prev != game.status)
-        {
-            Debug.Log($"GameStatus: {game.status}");
-            timeInCurrentStatus = 0f;
-        }
-        else
-        {
-            timeInCurrentStatus += Time.unscaledDeltaTime;
-        }
-        // Debug.Log(timeInCurrentStatus);
-
-
         SerialHandler.OnHoldingPositive += () =>
         {
             if (timeInCurrentStatus >= IGNORE_INPUT_TIME)
@@ -249,6 +215,38 @@ public class GameManager : MonoBehaviour
                 timeInCurrentStatus = 0.0f;
             }
         };
+    }
+
+    // ===== 毎フレーム実行される ==============
+    private void Update()
+    {
+        GameParameters.Status prev = game.status;
+        
+        bool Setting = SettingActive || FlightSettingActive;
+        // ----- ゲームの状態を管理 -----
+        if (Setting == true && EnterFlight == false && Landing == false)
+        {
+            game.status = GameParameters.Status.Preparation;
+        }
+        else if (Setting == false && EnterFlight == true && Landing == false)
+        {
+            game.status = GameParameters.Status.Flight;
+        }
+        else if (Setting == false && EnterFlight == true && Landing == true)
+        {
+            game.status = GameParameters.Status.Splashdown;
+        }
+
+        if (prev != game.status)
+        {
+            Debug.Log($"GameStatus: {game.status}");
+            timeInCurrentStatus = 0f;
+        }
+        else
+        {
+            timeInCurrentStatus += Time.unscaledDeltaTime;
+        }
+        // Debug.Log(timeInCurrentStatus);
     }
 
     public void FixedUpdate()
