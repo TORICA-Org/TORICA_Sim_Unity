@@ -26,10 +26,13 @@ UseMousePitchControl = False
 // マウス感度を設定する(初期値: 1.0)
 MouseSensitivity = 1.0
 
+// VR HMDによる重心移動を有効化する(初期値: False)
+VrOnlyMode = False
+
 // シリアルポートの名前(初期値: None)
 // (Windowsでは`COM1`など，Macでは`/dev/tty.usbmodem1421`など)
-// 候補：COM25
-SerialPort = com25
+// 候補：None
+SerialPort = com6
 
 // ニュートラルにおけるラダー入力値(初期値: 7500.0)
 RudderZero = 7500.0
@@ -72,9 +75,6 @@ TakeoffYaw = 0.0
 
 // 定常風をランダム化する(True/False)
 RandomizeWind = False
-
-
-
 
 
 
