@@ -85,7 +85,7 @@ static public class SerialHandler
                 Config.Flush();
             }
 
-            if (serialPort_ != null && serialPort_.IsOpen) // シリアルポート接続中
+            if (serialPort_ != null && serialPort_.IsOpen && Available) // シリアルポート接続中
             {
                 try {
                     message_ = serialPort_.ReadLine();
@@ -95,9 +95,11 @@ static public class SerialHandler
                     MapRudder();
                     InvokeEvents();
                     Available = true;
+                    status = "マイコンとの通信に成功しました．";
                 } catch (System.Exception e) {
                     Debug.LogWarning(e.Message);
                     Available = false;
+                    status = "マイコンとの通信に失敗しました．";
                 }
             }
             else // シリアルポート未接続

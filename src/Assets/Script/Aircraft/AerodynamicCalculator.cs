@@ -470,7 +470,7 @@ public class AerodynamicCalculator : MonoBehaviour
         }
 
         // VR Only Mode (重心センサーを使う場合は使用しない)
-        if (gm.VRMode && !SerialHandler.Available)
+        if (Config.VrOnlyMode)
         {
             massPilot = 68.0f; // [kg]
 

@@ -162,13 +162,18 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log("CMD: Reset");
                     EnterFlight = false;
-                    SettingMode = 0;
+                    SettingMode = 2;
                     SceneManager.LoadScene("FlightScene");
                 }
                 if (game.status == GameParameters.Status.Preparation) // 正の長押し＋準備
                 {
                     Debug.Log("CMD: Caribrate");
-                    cm.CaribrateVR();
+                    if (cm == null) {
+                        cm = GameObject.Find("CameraManager").GetComponent<CameraManager>();
+                    }
+                    if (cm != null) {
+                        cm.CaribrateVR();
+                    }
                     if (FlightSetting == null)
                     {
                         FlightSetting = GameObject.Find("FlightSetting");
@@ -194,7 +199,7 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log("CMD: Reset");
                     EnterFlight = false;
-                    SettingMode = 0;
+                    SettingMode = 2;
                     SceneManager.LoadScene("FlightScene");
                 }
                 if (game.status == GameParameters.Status.Preparation)

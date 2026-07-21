@@ -87,6 +87,14 @@ public static class Config
         set => SetProperty(ref useMousePitchControl, value);
     }
 
+    private static readonly bool defaultVrOnlyMode = false;
+    private static bool vrOnlyMode = defaultVrOnlyMode;
+    public static bool VrOnlyMode
+    {
+        get => vrOnlyMode;
+        set => SetProperty(ref vrOnlyMode, value);
+    }
+
     private static readonly float defaultMouseSensitivity = 1.0f;
     private static float mouseSensitivity = defaultMouseSensitivity;
     public static float MouseSensitivity
@@ -302,6 +310,7 @@ public static class Config
             showHorizontalLine = CheckContent("ShowHorizontalLine", defaultShowHorizontalLine);
             mainCamera = CheckContent("MainCamera", defaultMainCamera);
             useMousePitchControl = CheckContent("UseMousePitchControl", defaultUseMousePitchControl);
+            vrOnlyMode = CheckContent("VrOnlyMode", defaultVrOnlyMode);
             mouseSensitivity = CheckContent("MouseSensitivity", defaultMouseSensitivity);
             serialPort = CheckContent("SerialPort", defaultSerialPort);
             rudderZero = CheckContent("RudderZero", defaultRudderZero);
@@ -421,6 +430,10 @@ public static class Config
 
         addString($"マウス感度を設定する(初期値: {defaultMouseSensitivity:0.0})");
         addConfig("MouseSensitivity", MouseSensitivity.ToString("0.0"));
+        newLine();
+
+        addString($"VR HMDによる重心移動を有効化する(初期値: {defaultVrOnlyMode})");
+        addConfig("VrOnlyMode", VrOnlyMode.ToString());
         newLine();
 
         addString($"シリアルポートの名前(初期値: {defaultSerialPort})");
