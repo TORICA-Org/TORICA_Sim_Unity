@@ -7,19 +7,19 @@ public class Altitude : MonoBehaviour
 {
     private Text scoreText;
     private Rigidbody PlaneRigidbody;
-    private AerodynamicCalculator script;//AerodynamicCalculatorスクリプトにアクセスするための変数
+    private AerodynamicParameters aero;//AerodynamicCalculatorスクリプトにアクセスするための変数
 
     // Start is called before the first frame update
     void Start()
     {
         scoreText = this.GetComponent<Text>();
-        PlaneRigidbody = GameManager.instance.Plane.GetComponent<Rigidbody>();
-        script = GameManager.instance.Plane.GetComponent<AerodynamicCalculator>();
+        PlaneRigidbody = GameManager.instance.game.Plane.GetComponent<Rigidbody>();
+        aero = GameManager.instance.aero;
     }
 
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = script.ALT.ToString("0.000");
+        scoreText.text = aero.ALT.ToString("0.000");
     }
 }

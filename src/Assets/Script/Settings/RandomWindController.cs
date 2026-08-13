@@ -8,9 +8,9 @@ public class RandomWindController : MonoBehaviour
     void Start()
     {
         if(Config.RandomizeWind){
-            Config.WindMagnitude = Random.Range(0,60)*0.1f;
+            Config.WindSpeed = Random.Range(0,60)*0.1f;
             Config.WindDirection =Random.Range(-12,12)*15f;
-            GameManager.instance.SettingChanged = true;
+            GameManager.instance.game.SettingChanged = true;
         }
     }
 
@@ -20,9 +20,9 @@ public class RandomWindController : MonoBehaviour
         if(Input.GetKeyDown("k")){
             Config.RandomizeWind = !Config.RandomizeWind;
             if(Config.RandomizeWind){
-                Config.WindMagnitude = Random.Range(0,60)*0.1f;
+                Config.WindSpeed = Random.Range(0,60)*0.1f;
                 Config.WindDirection =Random.Range(-12,12)*15f;
-                GameManager.instance.SettingChanged = true;
+                GameManager.instance.game.SettingChanged = true;
             }
         }
     }

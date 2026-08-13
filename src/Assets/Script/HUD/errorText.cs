@@ -9,9 +9,9 @@ public class errorText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.instance.error){
-            text.text = GameManager.instance.errorText;
-            GameManager.instance.error = false;
+        if(GameManager.instance.game.error){
+            text.text = GameManager.instance.game.errorText;
+            GameManager.instance.game.error = false;
         }
     }
 }

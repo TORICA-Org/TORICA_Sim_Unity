@@ -7,8 +7,8 @@ public class RudderRandController : MonoBehaviour
 {
     [SerializeField] private Text RudderRandText;
     public void PushRudderRandButton(){
-        GameManager.instance.RudderRand = !GameManager.instance.RudderRand;
-        if(GameManager.instance.RudderRand){
+        GameManager.instance.game.RudderRand = !GameManager.instance.game.RudderRand;
+        if(GameManager.instance.game.RudderRand){
             RudderRandText.text = "有効化中";
         }else{
             RudderRandText.text = "無効化中";
@@ -16,7 +16,7 @@ public class RudderRandController : MonoBehaviour
     }
 
     void Start(){
-        if(GameManager.instance.RudderRand){
+        if(GameManager.instance.game.RudderRand){
             RudderRandText.text = "有効化中";
         }else{
             RudderRandText.text = "無効化中";

@@ -24,40 +24,40 @@ public class ModelSelectButton : MonoBehaviour
             switch (number)
             {
                 case 0:
-                    GameManager.instance.PlaneName = "QX-18";
+                    GameManager.instance.game.PlaneName = "QX-18";
                     break;
                 case 1:
-                    GameManager.instance.PlaneName = "Tatsumi";
+                    GameManager.instance.game.PlaneName = "Tatsumi";
                     break;
                 case 2:
-                    GameManager.instance.PlaneName = "QX-20";
+                    GameManager.instance.game.PlaneName = "QX-20";
                     break;
                 case 3:
-                    GameManager.instance.PlaneName = "ARG-2";
+                    GameManager.instance.game.PlaneName = "ARG-2";
                     break;
                 case 4:
-                    GameManager.instance.PlaneName = "UL01B";
+                    GameManager.instance.game.PlaneName = "UL01B";
                     break;
                 case 5:
-                    GameManager.instance.PlaneName = "ORCA18";
+                    GameManager.instance.game.PlaneName = "ORCA18";
                     break;
                 case 6:
-                    GameManager.instance.PlaneName = "ORCA22";
+                    GameManager.instance.game.PlaneName = "ORCA22";
                     break;
                 case 7:
-                    GameManager.instance.PlaneName = "Gardenia";
+                    GameManager.instance.game.PlaneName = "Gardenia";
                     break;
                 case 8:
-                    GameManager.instance.PlaneName = "Aria";
+                    GameManager.instance.game.PlaneName = "Aria";
                     break;
                 case 9:
-                    GameManager.instance.PlaneName = "Camellia";
+                    GameManager.instance.game.PlaneName = "Camellia";
                     break;
                 case 10:
-                    GameManager.instance.PlaneName = "Mio";
+                    GameManager.instance.game.PlaneName = "Mio";
                     break;
                 case 11:
-                    GameManager.instance.PlaneName = "Ray";
+                    GameManager.instance.game.PlaneName = "Ray";
                     break;
                 default:
                     break;

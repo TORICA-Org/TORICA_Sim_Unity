@@ -7,65 +7,65 @@ using UnityEngine;
 public static class AircraftData
 {
     // 機体の重量と慣性モーメント - 6
-    public static float mass { get; private set; } // 重量[kg]
-    public static Vector3 centerOfMass { get; private set; } = Vector3.zero; // 重心位置[m]
-    public static Vector3 inertiaTensor { get; private set; } = Vector3.zero; // 慣性モーメント[kg*m^2]
-    public static Quaternion inertiaTensorRotation { get; private set; } = Quaternion.identity; // 慣性モーメントの回転
-    public static float massAircraft { get; private set; } // 機体のみ全重量[kg]
-    public static float centerOfMassAircraft { get; private set; } // 機体のみ全重心(パイロットなし,ピッチのみ)[m]
+    public static float mass = default; // 重量[kg]
+    public static Vector3 centerOfMass = Vector3.zero; // 重心位置[m]
+    public static Vector3 inertiaTensor = Vector3.zero; // 慣性モーメント[kg*m^2]
+    public static Quaternion inertiaTensorRotation = Quaternion.identity; // 慣性モーメントの回転
+    public static float massAircraft = default; // 機体のみ全重量[kg]
+    public static float centerOfMassAircraft = default; // 機体のみ全重心(パイロットなし,ピッチのみ)[m]
 
     // 巡航時 - 5
-    public static float Airspeed0 { get; private set; } // Magnitude of ground speed [m/s]
-    public static float alpha0 { get; private set; } // Angle of attack [deg]
-    public static float CDp0 { get; private set; } // Parasitic drag [-]
-    public static float Cmw0 { get; private set; } // Pitching momentum [-]
-    public static float CLMAX { get; private set; } // Maximum lift coefficient [-]
+    public static float Airspeed0 = default; // Magnitude of ground speed [m/s]
+    public static float alpha0 = default; // Angle of attack [deg]
+    public static float CDp0 = default; // Parasitic drag [-]
+    public static float Cmw0 = default; // Pitching momentum [-]
+    public static float CLMAX = default; // Maximum lift coefficient [-]
 
     // 主翼 - 7
-    public static float Sw { get; private set; } // Wing area of wing [m^2]
-    public static float bw { get; private set; } // Wing span [m]
-    public static float cMAC { get; private set; } // Mean aerodynamic chord [m]
-    public static float aw { get; private set; } // Wing Lift Slope [1/deg]
-    public static float hw { get; private set; } // Length between Wing a.c. and c.g.
-    public static float ew { get; private set; } // Wing efficiency
-    public static float AR { get; private set; } // Aspect Ratio
+    public static float Sw = default; // Wing area of wing [m^2]
+    public static float bw = default; // Wing span [m]
+    public static float cMAC = default; // Mean aerodynamic chord [m]
+    public static float aw = default; // Wing Lift Slope [1/deg]
+    public static float hw = default; // Length between Wing a.c. and c.g.
+    public static float ew = default; // Wing efficiency
+    public static float AR = default; // Aspect Ratio
 
     // 水平尾翼 - 7
-    public static bool Downwash { get; private set; } // Conventional Tail: True, T-Tail: False
-    public static float St { get; private set; } // Wing area of tail
-    public static float at { get; private set; } // Tail Lift Slope [1/deg]
-    public static float lt { get; private set; } // Length between Tail a.c. and c.g.
-    public static float deMAX { get; private set; } // Maximum elevator angle
-    public static float tau { get; private set; } // Control surface angle of attack effectiveness [-]
-    public static float VH { get; private set; } // Tail Volume
+    public static bool Downwash = default; // Conventional Tail: True, T-Tail: False
+    public static float St = default; // Wing area of tail
+    public static float at = default; // Tail Lift Slope [1/deg]
+    public static float lt = default; // Length between Tail a.c. and c.g.
+    public static float deMAX = default; // Maximum elevator angle
+    public static float tau = default; // Control surface angle of attack effectiveness [-]
+    public static float VH = default; // Tail Volume
 
     // 垂直尾翼 - 1
-    public static float drMAX { get; private set; } // Maximum rudder angle
+    public static float drMAX = default; // Maximum rudder angle
 
     // 地面効果 - 1
-    public static float CGEMIN { get; private set; } // Minimum Ground Effect Coefficient [-]
+    public static float CGEMIN = default; // Minimum Ground Effect Coefficient [-]
 
     // 安定微係数 - 12
-    public static float Cyb { get; private set; } // [1/deg]
-    public static float Cyp { get; private set; } // [1/rad]
-    public static float Cyr { get; private set; } // [1/rad]
-    public static float Cydr { get; private set; } // [1/deg]
-    public static float Clb { get; private set; } // [1/deg]
-    public static float Clp { get; private set; } // [1/rad]
-    public static float Clr { get; private set; } // [1/rad]
-    public static float Cldr { get; private set; } // [1/deg]
-    public static float Cnb { get; private set; } // [1/deg]
-    public static float Cnp { get; private set; } // [1/rad]
-    public static float Cnr { get; private set; } // [1/rad]
-    public static float Cndr { get; private set; } // [1/deg]
+    public static float Cyb = default; // [1/deg]
+    public static float Cyp = default; // [1/rad]
+    public static float Cyr = default; // [1/rad]
+    public static float Cydr = default; // [1/deg]
+    public static float Clb = default; // [1/deg]
+    public static float Clp = default; // [1/rad]
+    public static float Clr = default; // [1/rad]
+    public static float Cldr = default; // [1/deg]
+    public static float Cnb = default; // [1/deg]
+    public static float Cnp = default; // [1/rad]
+    public static float Cnr = default; // [1/rad]
+    public static float Cndr = default; // [1/deg]
 
     // 離陸 - 1
-    public static float YL { get; private set; } // 機体中心から翼持ち棒までの長さ[m]
+    public static float YL = default; // 機体中心から翼持ち棒までの長さ[m]
 
     // 合計 - 40
 
     // 一覧用の機体名リスト.
-    public static List<string> Names { get; private set; } = new List<string>();
+    public static List<string> Names = new List<string>();
 
     // 各パラメータがCSVから読み込まれたかどうかを保持するフラグ.
     private static readonly bool[] _isSetted = new bool[40];
@@ -143,9 +143,55 @@ public static class AircraftData
         Config.Sync();
     }
 
-    // ===== 指定されたCSVファイルから機体データを読み込む ===========================================================
-    private static bool Load(string name)
+    private static void Reset()
     {
+        mass = default; // 重量[kg]
+        centerOfMass = Vector3.zero; // 重心位置[m]
+        inertiaTensor = Vector3.zero; // 慣性モーメント[kg*m^2]
+        inertiaTensorRotation = Quaternion.identity; // 慣性モーメントの回転
+        massAircraft = default; // 機体のみ全重量[kg]
+        centerOfMassAircraft = default; // 機体のみ全重心(パイロットなし,ピッチのみ)[m]
+        Airspeed0 = default; // Magnitude of ground speed [m/s]
+        alpha0 = default; // Angle of attack [deg]
+        CDp0 = default; // Parasitic drag [-]
+        Cmw0 = default; // Pitching momentum [-]
+        CLMAX = default; // Maximum lift coefficient [-]
+        Sw = default; // Wing area of wing [m^2]
+        bw = default; // Wing span [m]
+        cMAC = default; // Mean aerodynamic chord [m]
+        aw = default; // Wing Lift Slope [1/deg]
+        hw = default; // Length between Wing a.c. and c.g.
+        ew = default; // Wing efficiency
+        AR = default; // Aspect Ratio
+        Downwash = default; // Conventional Tail: True, T-Tail: False
+        St = default; // Wing area of tail
+        at = default; // Tail Lift Slope [1/deg]
+        lt = default; // Length between Tail a.c. and c.g.
+        deMAX = default; // Maximum elevator angle
+        tau = default; // Control surface angle of attack effectiveness [-]
+        VH = default; // Tail Volume
+        drMAX = default; // Maximum rudder angle
+        CGEMIN = default; // Minimum Ground Effect Coefficient [-]
+        Cyb = default; // [1/deg]
+        Cyp = default; // [1/rad]
+        Cyr = default; // [1/rad]
+        Cydr = default; // [1/deg]
+        Clb = default; // [1/deg]
+        Clp = default; // [1/rad]
+        Clr = default; // [1/rad]
+        Cldr = default; // [1/deg]
+        Cnb = default; // [1/deg]
+        Cnp = default; // [1/rad]
+        Cnr = default; // [1/rad]
+        Cndr = default; // [1/deg]
+        YL = default; // 機体中心から翼持ち棒までの長さ[m]
+    }
+
+    // ===== 指定されたCSVファイルから機体データを読み込む ===========================================================
+    public static bool Load(string name)
+    {
+        Reset();
+
         int recordCount = 50;
         int fieldCount = 20;
 
@@ -425,63 +471,61 @@ public static class AircraftData
                 } // for j
             } // for i
 
-            /*
-            // 機体の重量と慣性モーメント - 6
-            Debug.Log("mass: " + mass); // 重量[kg]
-            Debug.Log("centerOfMass: " + centerOfMass); // 重心位置[m]
-            Debug.Log("inertiaTensor: " + inertiaTensor); // 慣性モーメント[kg*m^2]
-            Debug.Log("inertiaTensorRotation: " + inertiaTensorRotation); // 慣性モーメントの回転
-            Debug.Log("massAircraft: " + massAircraft); // 機体のみ全重量[kg]
-            Debug.Log("centerOfMassAircraft: " + centerOfMassAircraft); // 機体のみ全重心(パイロットなし,ピッチのみ)[m]
+            // // 機体の重量と慣性モーメント - 6
+            // Debug.Log("mass: " + mass); // 重量[kg]
+            // Debug.Log("centerOfMass: " + centerOfMass); // 重心位置[m]
+            // Debug.Log("inertiaTensor: " + inertiaTensor); // 慣性モーメント[kg*m^2]
+            // Debug.Log("inertiaTensorRotation: " + inertiaTensorRotation); // 慣性モーメントの回転
+            // Debug.Log("massAircraft: " + massAircraft); // 機体のみ全重量[kg]
+            // Debug.Log("centerOfMassAircraft: " + centerOfMassAircraft); // 機体のみ全重心(パイロットなし,ピッチのみ)[m]
 
-            // 巡航時 - 5
-            Debug.Log("Airspeed0: " + Airspeed0);// Magnitude of ground speed [m/s]
-            Debug.Log("alpha0: " + alpha0); // Angle of attack [deg]
-            Debug.Log("CDp0: " + CDp0); // Parasitic drag [-]
-            Debug.Log("Cmw0: " + Cmw0); // Pitching momentum [-]
-            Debug.Log("CLMAX: " + CLMAX); // Maximum lift coefficient [-]
+            // // 巡航時 - 5
+            // Debug.Log("Airspeed0: " + Airspeed0);// Magnitude of ground speed [m/s]
+            // Debug.Log("alpha0: " + alpha0); // Angle of attack [deg]
+            // Debug.Log("CDp0: " + CDp0); // Parasitic drag [-]
+            // Debug.Log("Cmw0: " + Cmw0); // Pitching momentum [-]
+            // Debug.Log("CLMAX: " + CLMAX); // Maximum lift coefficient [-]
 
-            // 主翼 - 7
-            Debug.Log("Sw: " + Sw); // Wing area of wing [m^2]
-            Debug.Log("bw: " + bw); // Wing span [m]
-            Debug.Log("cMAC: " + cMAC); // Mean aerodynamic chord [m]
-            Debug.Log("aw: " + aw); // Wing Lift Slope [1/deg]
-            Debug.Log("hw: " + hw); // Length between Wing a.c. and c.g.
-            Debug.Log("ew: " + ew); // Wing efficiency
-            Debug.Log("AR: " + AR); // Aspect Ratio
+            // // 主翼 - 7
+            // Debug.Log("Sw: " + Sw); // Wing area of wing [m^2]
+            // Debug.Log("bw: " + bw); // Wing span [m]
+            // Debug.Log("cMAC: " + cMAC); // Mean aerodynamic chord [m]
+            // Debug.Log("aw: " + aw); // Wing Lift Slope [1/deg]
+            // Debug.Log("hw: " + hw); // Length between Wing a.c. and c.g.
+            // Debug.Log("ew: " + ew); // Wing efficiency
+            // Debug.Log("AR: " + AR); // Aspect Ratio
 
-            // 水平尾翼 - 7
-            Debug.Log("Downwash: " + Downwash); // Conventional Tail: True, T-Tail: False
-            Debug.Log("St: " + St); // Wing area of tail
-            Debug.Log("at: " + at); // Tail Lift Slope [1/deg]
-            Debug.Log("lt: " + lt); // Length between Tail a.c. and c.g.
-            Debug.Log("deMAX: " + deMAX); // Maximum elevator angle
-            Debug.Log("tau: " + tau); // Control surface angle of attack effectiveness [-]
-            Debug.Log("VH: " + VH); // Tail Volume
+            // // 水平尾翼 - 7
+            // Debug.Log("Downwash: " + Downwash); // Conventional Tail: True, T-Tail: False
+            // Debug.Log("St: " + St); // Wing area of tail
+            // Debug.Log("at: " + at); // Tail Lift Slope [1/deg]
+            // Debug.Log("lt: " + lt); // Length between Tail a.c. and c.g.
+            // Debug.Log("deMAX: " + deMAX); // Maximum elevator angle
+            // Debug.Log("tau: " + tau); // Control surface angle of attack effectiveness [-]
+            // Debug.Log("VH: " + VH); // Tail Volume
 
-            // 垂直尾翼 - 1
-            Debug.Log("drMAX: " + drMAX); // Maximum rudder angle
+            // // 垂直尾翼 - 1
+            // Debug.Log("drMAX: " + drMAX); // Maximum rudder angle
 
-            // 地面効果 - 1
-            Debug.Log("CGEMIN: " + CGEMIN); // Minimum Ground Effect Coefficient [-]
+            // // 地面効果 - 1
+            // Debug.Log("CGEMIN: " + CGEMIN); // Minimum Ground Effect Coefficient [-]
 
-            // 安定微係数 - 12
-            Debug.Log("Cyb: " + Cyb); // [1/deg]
-            Debug.Log("Cyp: " + Cyp); // [1/rad]
-            Debug.Log("Cyr: " + Cyr); // [1/rad]
-            Debug.Log("Cydr: " + Cydr); // [1/deg]
-            Debug.Log("Clb: " + Clb); // [1/deg]
-            Debug.Log("Clp: " + Clp); // [1/rad]
-            Debug.Log("Clr: " + Clr); // [1/rad]
-            Debug.Log("Cldr: " + Cldr); // [1/deg]
-            Debug.Log("Cnb: " + Cnb); // [1/deg]
-            Debug.Log("Cnp: " + Cnp); // [1/rad]
-            Debug.Log("Cnr: " + Cnr); // [1/rad]
-            Debug.Log("Cndr: " + Cndr); // [1/deg]
+            // // 安定微係数 - 12
+            // Debug.Log("Cyb: " + Cyb); // [1/deg]
+            // Debug.Log("Cyp: " + Cyp); // [1/rad]
+            // Debug.Log("Cyr: " + Cyr); // [1/rad]
+            // Debug.Log("Cydr: " + Cydr); // [1/deg]
+            // Debug.Log("Clb: " + Clb); // [1/deg]
+            // Debug.Log("Clp: " + Clp); // [1/rad]
+            // Debug.Log("Clr: " + Clr); // [1/rad]
+            // Debug.Log("Cldr: " + Cldr); // [1/deg]
+            // Debug.Log("Cnb: " + Cnb); // [1/deg]
+            // Debug.Log("Cnp: " + Cnp); // [1/rad]
+            // Debug.Log("Cnr: " + Cnr); // [1/rad]
+            // Debug.Log("Cndr: " + Cndr); // [1/deg]
 
-            // 離陸 - 1
-            Debug.Log("YL: " + YL); // 機体中心から翼持ち棒までの長さ[m]
-            */
+            // // 離陸 - 1
+            // Debug.Log("YL: " + YL); // 機体中心から翼持ち棒までの長さ[m]
 
             for (int i = 0; i < 40; i++)
             {
@@ -492,6 +536,7 @@ public static class AircraftData
                 }
             }
 
+            Debug.Log($"AircraftData loaded: {name}");
             return true;
         } // try
         catch (Exception e)

@@ -23,17 +23,16 @@ public class prohibitedArea : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        GameManager.instance.Landing = true;
-        //GameManager.instance.SettingMode = 0;
+        GameManager.instance.game.status = GameParameters.Status.Splashdown;
+        //GameManager.instance.game.SettingMode = 0;
         //canvas.enabled = true;
         ResultScreen.terminationReason = "飛行禁止区域への進入";
-        Time.timeScale = (float)Convert.ToInt32(!GameManager.instance.SettingActive & !GameManager.instance.Landing);
     }
 
     // Update is called once per frame
-    
+
     void Update()
     {
-        //Result.SetActive(/*!GameManager.instance.SettingActive & */GameManager.instance.Landing);
+        //Result.SetActive(/*!GameManager.instance.game.SettingActive & */GameManager.instance.game.Landing);
     }
 }

@@ -20,8 +20,8 @@ public class MakeChart1 : MakeCharts
     {   
         chart.AddXAxisData(i*airdata.interval  +"s");
 
-        chart.AddData(0, GameManager.instance.ThetaList[i]);
-        chart.AddData(1, GameManager.instance.AlphaList[i]);
+        chart.AddData(0, GameManager.instance.game.ThetaList[i]);
+        chart.AddData(1, GameManager.instance.game.AlphaList[i]);
 
         i++;
         //Debug.Log("d");

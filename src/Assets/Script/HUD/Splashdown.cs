@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 
-public class Landing : MonoBehaviour
+public class Splashdown : MonoBehaviour
 {
     private GameObject Result;
     private GameObject SimpleResult;
@@ -18,22 +18,23 @@ public class Landing : MonoBehaviour
 
         // Result.SetActive(false);
         // SimpleResult.SetActive(false);
-        GameManager.instance.Landing = false;
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        GameManager.instance.Landing = true;
-        //GameManager.instance.SettingMode = 0; // ?
+        GameManager.instance.game.status = GameParameters.Status.Splashdown;
+        //GameManager.instance.game.SettingMode = 0; // ?
         //canvas.enabled = true;
         ResultScreen.terminationReason = "着水";
-        Time.timeScale=(float)Convert.ToInt32(!GameManager.instance.SettingActive & !GameManager.instance.Landing);
+        string sign = Config.WindDirection > 0f ? "R" : Config.WindDirection < 0f ? "L" : "";
+        string info = $"WindDirection: {sign}{Config.WindDirection:0.0}deg, WindSpeed: {Config.WindSpeed:0.0}m/s";
+        Log.Append($"[Splashdown!] Flew {GameManager.instance.game.Distance:0.00}m in {GameManager.instance.game.timeInFlight:0.0}s! ({info})");
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Result.SetActive(!GameManager.instance.SettingActive & GameManager.instance.Landing);
-        // SimpleResult.SetActive(!GameManager.instance.SettingActive & GameManager.instance.Landing);
+        // Result.SetActive(!GameManager.instance.game.SettingActive & GameManager.instance.game.Landing);
+        // SimpleResult.SetActive(!GameManager.instance.game.SettingActive & GameManager.instance.game.Landing);
     }
 }

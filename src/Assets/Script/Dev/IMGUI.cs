@@ -22,12 +22,12 @@ public class IMGUI : MonoBehaviour
         /*
         if (GUI.Button(new Rect(10, 10, 300, 150), "VRMode"))
         {
-            gm.VRMode = !gm.VRMode;
+            gm.game.VRMode = !gm.game.VRMode;
         }
 
-        if (GUI.Button(new Rect(10, 210, 300, 150), "CaribrateVR"))
+        if (GUI.Button(new Rect(10, 210, 300, 150), "CalibrateVR"))
         {
-            //CameraManager.CaribrateVR();
+            //CameraManager.CalibrateVR();
         }
 
         if (GUI.Button(new Rect(10, 10, 100, 50), "Write CSV"))

@@ -10,16 +10,16 @@ public class ManualXRControl
 
     public IEnumerator StartXRCoroutine()
     {
-        gm.error = true;
-        gm.errorText = "Initializing XR...";
+        gm.game.error = true;
+        gm.game.errorText = "Initializing XR...";
         Debug.Log("Initializing XR...");
 
         yield return XRGeneralSettings.Instance.Manager.InitializeLoader();
 
-        gm.error = true;
+        gm.game.error = true;
         if (XRGeneralSettings.Instance.Manager.activeLoader == null)
         {
-            gm.errorText = "Initializing XR Failed. Check Editor or Player log for details.";
+            gm.game.errorText = "Initializing XR Failed. Check Editor or Player log for details.";
             Debug.LogWarning("Initializing XR Failed. Check Editor or Player log for details.");
             throw new ArgumentNullException(nameof(XRGeneralSettings.Instance.Manager.activeLoader));
         }
@@ -27,20 +27,21 @@ public class ManualXRControl
         {
             Debug.Log("Starting XR...");
             XRGeneralSettings.Instance.Manager.StartSubsystems();
-            gm.errorText = "VR started.";
+            Debug.Log("Audio Engine Reset for VR.");
+            gm.game.errorText = "VR started.";
         }
     }
 
     public void StopXR()
     {
-        gm.error = true;
-        gm.errorText = "Stopping XR...";
+        gm.game.error = true;
+        gm.game.errorText = "Stopping XR...";
         Debug.Log("Stopping XR...");
 
         XRGeneralSettings.Instance.Manager.StopSubsystems();
         XRGeneralSettings.Instance.Manager.DeinitializeLoader();
         Debug.Log("XR stopped completely.");
-        gm.error = true;
-        gm.errorText = "VR stopped.";
+        gm.game.error = true;
+        gm.game.errorText = "VR stopped.";
     }
 }

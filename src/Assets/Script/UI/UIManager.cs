@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (gm.FlightSettingActive)
+        if (gm.game.status == GameParameters.Status.Preparation)
         {
             //screen = Screens.None;
             screen = Screens.FlightSetting;
@@ -116,19 +116,22 @@ public class UIManager : MonoBehaviour
             canvas.enabled = true;
             */
         }
-        else if (!gm.FlightSettingActive && !gm.Landing) // フライト中.
+        else if (gm.game.status == GameParameters.Status.Flight) // フライト中.
         {
             screen = Screens.InFlight;
             basePanel.SetActive(false); // `BasePanel`を非アクティブにする.
             baseScrollView.SetActive(false); // `BaseScrollView`を非アクティブにする.
             canvas.enabled = false;
         }
-        else if (gm.Landing && screen == Screens.InFlight) // 着水.
+        else if (gm.game.status == GameParameters.Status.Splashdown) // 着水.
         {
             canvas.enabled = true;
             basePanel.SetActive(true); // `BasePanel`をアクティブにする.
             baseScrollView.SetActive(false); // `BaseScrollView`を非アクティブにする.
-            screen = Screens.ResultForPilot;
+            if (screen != Screens.ResultForPilot && screen != Screens.ResultFourGraphs && screen != Screens.ResultTwoGraphs)
+            {
+                screen = Screens.ResultForPilot;
+            }
         }
 
         RefleshScreen(); // 画面を更新.

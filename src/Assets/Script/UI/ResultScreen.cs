@@ -20,7 +20,7 @@ public class ResultScreen
     public ResultScreen(GameObject basePanel)
     {
         this.basePanel = basePanel;
-        this.PlaneRigidbody = gm.Plane.GetComponent<Rigidbody>();
+        this.PlaneRigidbody = gm.game.Plane.GetComponent<Rigidbody>();
     }
 
     // ===== パイロット訓練用の結果表示 =========
@@ -38,8 +38,8 @@ public class ResultScreen
         ArrowButton(left, right); // `<`ボタンと`>`ボタンの生成
 
         // 距離を表示するテキストの生成
-        float Distance = gm.Distance;
-        if (GameManager.instance.FlightMode == "BirdmanRally") Distance -= 10f;
+        float Distance = gm.game.Distance;
+        if (GameManager.instance.game.FlightMode == "BirdmanRally") Distance -= 10f;
         string dist = Distance.ToString("0.000") + " m";
         StaticText<string> textDist = new(basePanel, "TextDist", dist, 150.0f);
         GameObject textObj = textDist.gameObject;
@@ -79,7 +79,7 @@ public class ResultScreen
         // トラブルの結果を表示
         string troubles = "";
         troubles += "風速: ";
-        troubles += Config.WindMagnitude.ToString("0.0") + "m/s";
+        troubles += Config.WindSpeed.ToString("0.0") + "m/s";
         troubles += "    風上: ";
         string DirectionText;
         if (Config.WindDirection >= 0)
@@ -94,9 +94,9 @@ public class ResultScreen
         troubles += DirectionText + "deg" + System.Environment.NewLine;
 
         troubles += "トラブル:\n";
-        float value = (float)Math.Round(GameManager.instance.RudderErrorValue,2,MidpointRounding.AwayFromZero);
+        float value = (float)Math.Round(GameManager.instance.game.RudderErrorValue,2,MidpointRounding.AwayFromZero);
 
-        switch(GameManager.instance.RudderErrorMode){
+        switch(GameManager.instance.game.RudderErrorMode){
             case 1:
                 troubles += "ラダー"+value+"に固定,\n";
                 break;
@@ -108,30 +108,30 @@ public class ResultScreen
                 break;
         }
 
-        value = (float)Math.Round(GameManager.instance.CenterOfMassErrorValue,2,MidpointRounding.AwayFromZero);
-        if(GameManager.instance.CenterOfMassErrorValue != 0){
+        value = (float)Math.Round(GameManager.instance.game.CenterOfMassErrorValue,2,MidpointRounding.AwayFromZero);
+        if(GameManager.instance.game.CenterOfMassErrorValue != 0){
             troubles += "重心"+value+"ズレ\n";
         }
 
         troubles += "倍率変化:";
 
-        value = (float)Math.Round(GameManager.instance.CenterOfMassRandValue,2,MidpointRounding.AwayFromZero);
-        if(GameManager.instance.CenterOfMassRandValue != 1){
+        value = (float)Math.Round(GameManager.instance.game.CenterOfMassRandValue,2,MidpointRounding.AwayFromZero);
+        if(GameManager.instance.game.CenterOfMassRandValue != 1){
             troubles += "重心×"+value+",";
         }
 
-        value = (float)Math.Round(GameManager.instance.GustRandValue,2,MidpointRounding.AwayFromZero);
-        if(GameManager.instance.GustRandValue != 0){
+        value = (float)Math.Round(GameManager.instance.game.GustRandValue,2,MidpointRounding.AwayFromZero);
+        if(GameManager.instance.game.GustRandValue != 0){
             troubles += "風+"+value+",";
         }
 
-        value = (float)Math.Round(GameManager.instance.RudderRandValue,2,MidpointRounding.AwayFromZero);
-        if(GameManager.instance.RudderRandValue != 1){
+        value = (float)Math.Round(GameManager.instance.game.RudderRandValue,2,MidpointRounding.AwayFromZero);
+        if(GameManager.instance.game.RudderRandValue != 1){
             troubles += "ラダー×"+value;
         }
 
-        value = (float)Math.Round(GameManager.instance.CgeRandValue,2,MidpointRounding.AwayFromZero);
-        if(GameManager.instance.CgeRandValue != 1){
+        value = (float)Math.Round(GameManager.instance.game.CgeRandValue,2,MidpointRounding.AwayFromZero);
+        if(GameManager.instance.game.CgeRandValue != 1){
             troubles += "地面効果×"+value;
         }
 
@@ -163,7 +163,7 @@ public class ResultScreen
         ArrowButton(left, right); // `<`ボタンと`>`ボタンの生成
 
         // 左下のグラフの生成
-        Chart airdataChart1 = new(basePanel, "ChartAirspeed", "機速", gm.AirspeedList);
+        Chart airdataChart1 = new(basePanel, "ChartAirspeed", "機速", gm.game.AirspeedList);
         RectTransform AirdataChart1Rect = airdataChart1.rectTransform;
         AirdataChart1Rect.anchorMin = new Vector2(0.05f, 0.1f); // アンカーの最小値
         AirdataChart1Rect.anchorMax = new Vector2(0.49f, 0.9f); // アンカーの最大値
@@ -171,7 +171,7 @@ public class ResultScreen
         AirdataChart1Rect.anchoredPosition = new Vector2(0, 0); // アンカーを基準にした座標 (pos_x, pos_y) を設定
 
         // 右下のグラフの生成
-        Chart airdataChart2 = new(basePanel, "ChartAlt", "高度", gm.AltList);
+        Chart airdataChart2 = new(basePanel, "ChartAlt", "高度", gm.game.AltList);
         RectTransform AirdataChart2Rect = airdataChart2.rectTransform;
         AirdataChart2Rect.anchorMin = new Vector2(0.51f, 0.1f); // アンカーの最小値
         AirdataChart2Rect.anchorMax = new Vector2(0.95f, 0.9f); // アンカーの最大値
@@ -195,7 +195,7 @@ public class ResultScreen
         ArrowButton(left, right); // `<`ボタンと`>`ボタンの生成
 
         // 左上のグラフの生成
-        Chart airdataChart1 = new(basePanel, "ChartPitchAlpha", "ピッチ(theta)", gm.ThetaList, "迎角(alpha)", gm.AlphaList);
+        Chart airdataChart1 = new(basePanel, "ChartPitchAlpha", "ピッチ(theta)", gm.game.ThetaList, "迎角(alpha)", gm.game.AlphaList);
         GameObject chartObj = airdataChart1.gameObject;
         RectTransform AirdataChart1Rect = airdataChart1.rectTransform;
         AirdataChart1Rect.anchorMin = new Vector2(0.05f, 0.51f); // アンカーの最小値
@@ -204,7 +204,7 @@ public class ResultScreen
         AirdataChart1Rect.anchoredPosition = new Vector2(0, 0); // アンカーを基準にした座標 (pos_x, pos_y) を設定
 
         // 右上のグラフの生成
-        Chart airdataChart2 = new(basePanel, "ChartRollBeta", "ロール(phi)", gm.PhiList, "横滑り角(beta)", gm.BetaList);
+        Chart airdataChart2 = new(basePanel, "ChartRollBeta", "ロール(phi)", gm.game.PhiList, "横滑り角(beta)", gm.game.BetaList);
         RectTransform AirdataChart2Rect = airdataChart2.rectTransform;
         AirdataChart2Rect.anchorMin = new Vector2(0.51f, 0.51f); // アンカーの最小値
         AirdataChart2Rect.anchorMax = new Vector2(0.95f, 0.99f); // アンカーの最大値
@@ -212,7 +212,7 @@ public class ResultScreen
         AirdataChart2Rect.anchoredPosition = new Vector2(0, 0); // アンカーを基準にした座標 (pos_x, pos_y) を設定
 
         //左下のグラフの生成
-        Chart airdataChart3 = new(basePanel, "ChartCenterOfG", "全備重心", gm.CenterOfGList);
+        Chart airdataChart3 = new(basePanel, "ChartCenterOfG", "全備重心", gm.game.CenterOfGList);
         RectTransform AirdataChart3Rect = airdataChart3.rectTransform;
         AirdataChart3Rect.anchorMin = new Vector2(0.05f, 0.01f); // アンカーの最小値
         AirdataChart3Rect.anchorMax = new Vector2(0.49f, 0.49f); // アンカーの最大値
@@ -220,7 +220,7 @@ public class ResultScreen
         AirdataChart3Rect.anchoredPosition = new Vector2(0, 0); // アンカーを基準にした座標 (pos_x, pos_y) を設定
 
         // 右下のグラフの生成
-        Chart airdataChart4 = new(basePanel, "ChartRudder", "ラダー", gm.drList);
+        Chart airdataChart4 = new(basePanel, "ChartRudder", "ラダー", gm.game.drList);
         RectTransform AirdataChart4Rect = airdataChart4.rectTransform;
         AirdataChart4Rect.anchorMin = new Vector2(0.51f, 0.01f); // アンカーの最小値
         AirdataChart4Rect.anchorMax = new Vector2(0.95f, 0.49f); // アンカーの最大値

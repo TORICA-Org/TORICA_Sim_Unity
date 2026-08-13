@@ -13,17 +13,17 @@ public class Distance : MonoBehaviour
     void Start()
     {
         scoreText = this.GetComponent<Text>();
-        PlaneRigidbody = GameManager.instance.Plane.GetComponent<Rigidbody>();
+        PlaneRigidbody = GameManager.instance.game.Plane.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float Distance = (PlaneRigidbody.position-GameManager.instance.PlatformPosition).magnitude;
-        if(GameManager.instance.FlightMode=="BirdmanRally"){Distance-=10f;}
+        float Distance = (PlaneRigidbody.position-GameManager.instance.game.PlatformPosition).magnitude;
+        if(GameManager.instance.game.FlightMode=="BirdmanRally"){Distance-=10f;}
 
         scoreText.text = "\n" + Distance.ToString("0.000");
-        if(GameManager.instance.RudderErrorMode == 0){
+        if(GameManager.instance.game.RudderErrorMode == 0){
             
         }        
     }

@@ -134,8 +134,8 @@ public class XChartPrinter : MonoBehaviour
         for (int i = 0; i < pickedDataNum; i++)
         {
             chart.AddXAxisData((0.02 * pickedIndex[i]) + "s"); // ピックしたインデックスは各時点でのフレーム数であるため
-            chart.AddData(0, gm.ThetaList[pickedIndex[i]]); // 系列0(serie1)に追加
-            chart.AddData(1, gm.AlphaList[pickedIndex[i]]); // 系列1(serie2)に追加
+            chart.AddData(0, gm.game.ThetaList[pickedIndex[i]]); // 系列0(serie1)に追加
+            chart.AddData(1, gm.game.AlphaList[pickedIndex[i]]); // 系列1(serie2)に追加
         }
 
         chart.RefreshChart(); // グラフを更新
@@ -158,8 +158,8 @@ public class XChartPrinter : MonoBehaviour
         for (int i = 0; i < pickedDataNum; i++)
         {
             chart.AddXAxisData((0.02 * pickedIndex[i]) + "s");
-            chart.AddData(0, gm.PhiList[pickedIndex[i]]);
-            chart.AddData(1, gm.BetaList[pickedIndex[i]]);
+            chart.AddData(0, gm.game.PhiList[pickedIndex[i]]);
+            chart.AddData(1, gm.game.BetaList[pickedIndex[i]]);
         }
 
         chart.RefreshChart();
@@ -182,8 +182,8 @@ public class XChartPrinter : MonoBehaviour
         for (int i = 0; i < pickedDataNum; i++)
         {
             chart.AddXAxisData((0.02 * pickedIndex[i]) + "s");
-            chart.AddData(0, gm.AirspeedList[pickedIndex[i]]);
-            chart.AddData(1, gm.AltList[pickedIndex[i]]);
+            chart.AddData(0, gm.game.AirspeedList[pickedIndex[i]]);
+            chart.AddData(1, gm.game.AltList[pickedIndex[i]]);
         }
 
         chart.RefreshChart();
@@ -207,7 +207,7 @@ public class XChartPrinter : MonoBehaviour
         for (int i = 0; i < pickedDataNum; i++)
         {
             chart.AddXAxisData((0.02 * pickedIndex[i]) + "s");
-            chart.AddData(0, gm.CenterOfGList[pickedIndex[i]]);
+            chart.AddData(0, gm.game.CenterOfGList[pickedIndex[i]]);
         }
 
         chart.RefreshChart();
@@ -229,7 +229,7 @@ public class XChartPrinter : MonoBehaviour
         for (int i = 0; i < pickedDataNum; i++)
         {
             chart.AddXAxisData((0.02 * pickedIndex[i]) + "s");
-            chart.AddData(0, gm.drList[pickedIndex[i]]);
+            chart.AddData(0, gm.game.drList[pickedIndex[i]]);
         }
 
         chart.RefreshChart();

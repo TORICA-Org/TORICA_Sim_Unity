@@ -7,8 +7,8 @@ public class CenterOfMassRandController : MonoBehaviour
 {
     [SerializeField] private Text CenterOfMassRandText;
     public void PushCenterOfMassRandButton(){
-        GameManager.instance.CenterOfMassRand = !GameManager.instance.CenterOfMassRand;
-        if(GameManager.instance.CenterOfMassRand){
+        GameManager.instance.game.CenterOfMassRand = !GameManager.instance.game.CenterOfMassRand;
+        if(GameManager.instance.game.CenterOfMassRand){
             CenterOfMassRandText.text = "有効化中";
         }else{
             CenterOfMassRandText.text = "無効化中";
@@ -16,7 +16,7 @@ public class CenterOfMassRandController : MonoBehaviour
     }
 
     void Start(){
-        if(GameManager.instance.CenterOfMassRand){
+        if(GameManager.instance.game.CenterOfMassRand){
             CenterOfMassRandText.text = "有効化中";
         }else{
             CenterOfMassRandText.text = "無効化中";

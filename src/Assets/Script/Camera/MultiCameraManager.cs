@@ -19,9 +19,9 @@ public class MultiCameraDisplay
         gm = GameManager.instance;
 
         // Cameraのオブジェクトとコンポーネントを取得.
-        GameObject FPSObj = gm.Plane.transform.Find("FPSCamera").gameObject;
+        GameObject FPSObj = gm.game.Plane.transform.Find("FPSCamera").gameObject;
         FPSCamera = FPSObj.GetComponent<Camera>();
-        GameObject TPSObj = gm.Plane.transform.Find("TPSCamera").gameObject;
+        GameObject TPSObj = gm.game.Plane.transform.Find("TPSCamera").gameObject;
         TPSCamera = TPSObj.GetComponent<Camera>();
 
         // XR Origin (XR Rig) オブジェクトとCameraコンポーネントを取得
@@ -56,17 +56,17 @@ public class MultiCameraDisplay
     public void ToggleSubDisplay()
     {
         Debug.Log("displays connected: " + Display.displays.Length);
-        gm.error = true;
+        gm.game.error = true;
         if (!isSubDisplayActive && Display.displays.Length > 1) // サブディスプレイがアクティブでなく、かつ複数のディスプレイが接続されている場合
         {
             isSubDisplayActive = true;
             Display.displays[1].Activate();
-            gm.errorText = "Sub display activated.";
+            gm.game.errorText = "Sub display activated.";
         }
         else
         {
             isSubDisplayActive = false;
-            GameManager.instance.errorText = "Sub display deactivated. Please restart this game.";
+            GameManager.instance.game.errorText = "Sub display deactivated. Please restart this game.";
         }
     }
 

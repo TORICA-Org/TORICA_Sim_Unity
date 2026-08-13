@@ -10,6 +10,6 @@ public class FieldOfViewSetter : MonoBehaviour
     void Start()
     {
         MyCamera = this.gameObject.GetComponent<Camera>();
-        MyCamera.fieldOfView = GameManager.instance.FieldOfView;
+        MyCamera.fieldOfView = GameManager.instance.game.FieldOfView;
     }
 }

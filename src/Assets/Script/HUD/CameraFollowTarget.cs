@@ -9,7 +9,7 @@ public class CameraFollowTarget : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = AerodynamicCalculator.Aircraft;
+        target = GameManager.instance.aero.Aircraft;
         // ゲーム開始時点のカメラとターゲットの距離（オフセット）を取得
         offset = gameObject.transform.position - target.transform.position;
     }

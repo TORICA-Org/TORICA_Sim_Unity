@@ -1,18 +1,28 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameParameters
 {
-    public static GameManager instance = null;
+    public enum Status
+    {
+        Preparation,
+        Flight,
+        Splashdown,
+        Pause,
+    }
+    public Status status = Status.Preparation;
+    private Status previousStatus = Status.Preparation;
 
-    [System.NonSerialized] public bool Landing = false;//着水しているか否か
+
+    // [System.NonSerialized] public bool Landing = false;//着水しているか否か
     // [System.NonSerialized] public bool HUDActive = true;//HUDを有効にしているか否か
     // [System.NonSerialized] public bool HorizontalLineActive = false;//水平赤線を有効にしているか否か
-    [System.NonSerialized] public bool SettingActive = false;//ゲーム設定の表示
-    [System.NonSerialized] public bool FlightSettingActive = false;//フライト設定の表示
+    // [System.NonSerialized] public bool SettingActive = false;//ゲーム設定の表示
+    // [System.NonSerialized] public bool FlightSettingActive = false;//フライト設定の表示
 
     // [System.NonSerialized] public bool isMainDisplayTPS = true; // true:FPS false:TPS
 
@@ -29,7 +39,7 @@ public class GameManager : MonoBehaviour
     //[System.NonSerialized] public bool updatePlaneData = true; // 最初は諸元を読み込む必要がある.
     // --------------------------------------------------------------------------------------
 
-    [System.NonSerialized] public bool EnterFlight = false;//フライト開始
+    // [System.NonSerialized] public bool EnterFlight = false;//フライト開始
     // [System.NonSerialized] public float MouseSensitivity = 1.000f; // Magnitude of Gust [m/s]
     // [System.NonSerialized] public float GustMag = 0.000f; // Magnitude of Gust [m/s]
     // [System.NonSerialized] public float GustDirection = 0.000f; // Direction of Gust [deg]: -180~180
@@ -51,25 +61,25 @@ public class GameManager : MonoBehaviour
     // [System.NonSerialized] public float massRight0 = 0;
     // [System.NonSerialized] public float massBackwardRight0 = 0;
     // [System.NonSerialized] public float massBackwardLeft0 = 0;
-    [System.NonSerialized] public float JoyStick0 = 0;
+    // [System.NonSerialized] public float JoyStick0 = 0;
 
     //ロードセルの調整用係数(この係数をロードセルの値に掛ける)
     // [System.NonSerialized] public float massLeftFactor = 1;
     // [System.NonSerialized] public float massRightFactor = 1;
     // [System.NonSerialized] public float massBackwardRightFactor = 1;
     // [System.NonSerialized] public float massBackwardLeftFactor = 1;
-    [System.NonSerialized] public float massForwardFactor = 1.0f;
-    [System.NonSerialized] public float massBackwardFactor = 1.0f;
-    [System.NonSerialized] public float DefaultFactor = 1.00f;
- 
+    // [System.NonSerialized] public float massForwardFactor = 1.0f;
+    // [System.NonSerialized] public float massBackwardFactor = 1.0f;
+    // [System.NonSerialized] public float DefaultFactor = 1.00f;
+
     // AerodynamicCalculator.csから移動
     [System.NonSerialized] public float lengthForward = 0.660f;//フレーム前方(フレーム＋センサー部分)から桁(原点)位置[m]
     [System.NonSerialized] public float lengthBackward = -0.330f;//フレーム後方(フレームの端)から桁(原点)位置[m]
-    [System.NonSerialized] public float centerOfMassPilotOffset; // 重心位置のオフセット値[m]
+    // [System.NonSerialized] public float centerOfMassPilotOffset; // 重心位置のオフセット値[m] // `PilotPositionSensor,cs`へ移動
 
     //ジョイスティックの調整用係数(この係数をジョイスティックの値に割る)
-    [System.NonSerialized] public float JoyStickFactor = 450;
-    [System.NonSerialized] public bool JoyStickFirst = true;
+    //[System.NonSerialized] public float JoyStickFactor = 450;
+    //[System.NonSerialized] public bool JoyStickFirst = true;
 
     //[System.NonSerialized] public float massPilotReal = 0f;
     //エアデータ保存リスト
@@ -88,15 +98,15 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized] public bool error = false;//エラーテキストが発行されるか否か
 
     // [System.NonSerialized] public bool FrameUseable = false;
-    [System.NonSerialized] public bool FirstLoad;//シミュ起動後最初のシーンロードか否か
     [System.NonSerialized] public int SettingMode = 0;
-    [System.NonSerialized] public bool TakeOff = false;
-    [System.NonSerialized] public float SoundBolume = 0;
-    [System.NonSerialized] public string FlightModel;
-    [SerializeField] public string DefaultFlightModel = "isoSim2";
+    // [System.NonSerialized] public bool TakeOff = false;
+    [System.NonSerialized] public float SoundVolume = 0;
+    // [System.NonSerialized] public string FlightModel;
+    // [SerializeField] public string DefaultFlightModel = "isoSim2";
 
     // VRモード
     [System.NonSerialized] public bool VRMode = false;
+    public bool isVRInitialized = false; // VRが初期化されたかどうかを示すフラグ
 
     // CameraManager.csから移動
     [System.NonSerialized] public Vector3 caribrationOffset = Vector3.zero; // キャリブレーションのオフセットを保持するフィールド.
@@ -119,143 +129,71 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized] public bool CgeRand = false;
     [System.NonSerialized] public float CgeRandValue = 0;
 
-    private GameParameters game;
-    private AerodynamicParameters aero;
-    private AerodynamicCalculator calc;
-    private CameraManager cm;
-    private AutoFactorSetter autoFactorSetter = null;
-    private GameObject FlightSetting = null;
+    public System.Diagnostics.Stopwatch statusStopwatch;
+    public float timeInCurrentStatus = 0.0f;
 
-    private float timeInCurrentStatus = 0.0f;
-    private readonly float IGNORE_INPUT_TIME = 1.0f;
+    public System.Diagnostics.Stopwatch flightStopwatch;
+    public float timeInFlight = 0.0f;
 
-    // ===== このインスタンスがロードされたときに実行される ==============
-    private void Awake()
+    public delegate void OnStatusChangeDelegate();
+    public event OnStatusChangeDelegate OnStatusChange;
+
+    public delegate void OnEnterPreparationDelegate();
+    public event OnEnterPreparationDelegate OnEnterPreparation;
+    public delegate void OnEnterFlightDelegate();
+    public event OnEnterFlightDelegate OnEnterFlight;
+    public delegate void OnSplashdownDelegate();
+    public event OnSplashdownDelegate OnSplashdown;
+    public delegate void OnEnterPauseDelegate();
+    public event OnEnterPauseDelegate OnEnterPause;
+
+    static private Thread thread_;
+    static private SynchronizationContext context = SynchronizationContext.Current;
+
+    public GameParameters()
     {
-        if (instance == null)
-        {
-            instance = this;
-            FirstLoad = true;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            GameManager.instance.FirstLoad = false;
-            Destroy(this.gameObject);
-        }
+        statusStopwatch = new System.Diagnostics.Stopwatch();
+        statusStopwatch.Start();
+        flightStopwatch = new System.Diagnostics.Stopwatch();
+        thread_ = new Thread(InvokeEvent);
+        thread_.Start();
     }
 
-    // ===== Updateの初回呼び出し前に実行される =============
-    private void Start()
+    private void InvokeEvent()
     {
-        FlightSetting = GameObject.Find("FlightSetting");
-        cm = GameObject.Find("CameraManager").GetComponent<CameraManager>();
-        game = new();
-        aero = new();
-        //calc = new();
-        // GameObject aeroObj = GameObject.Find("");
-        SerialHandler.OnHoldingPositive += () =>
+        while (true)
         {
-            if (timeInCurrentStatus >= IGNORE_INPUT_TIME)
+            if (status != previousStatus)
             {
-                if (game.status == GameParameters.Status.Splashdown) // 長押し＋着水
-                {
-                    Debug.Log("CMD: Reset");
-                    EnterFlight = false;
-                    SettingMode = 2;
-                    SceneManager.LoadScene("FlightScene");
-                }
-                if (game.status == GameParameters.Status.Preparation) // 正の長押し＋準備
-                {
-                    Debug.Log("CMD: Caribrate");
-                    if (cm == null) {
-                        cm = GameObject.Find("CameraManager").GetComponent<CameraManager>();
-                    }
-                    if (cm != null) {
-                        cm.CaribrateVR();
-                    }
-                    if (FlightSetting == null)
-                    {
-                        FlightSetting = GameObject.Find("FlightSetting");
-                    }
-                    if (FlightSetting != null && autoFactorSetter == null)
-                    {
-                        autoFactorSetter = FlightSetting.transform.Find("Connection/AutoFactorSetterButton").GetComponent<AutoFactorSetter>();
-                    }
-                    if (autoFactorSetter != null)
-                    {
-                        autoFactorSetter.OnPush();
-                    }
-                }
+                context.Post(d => OnStatusChange?.Invoke(), null);
+                previousStatus = status;
+                statusStopwatch.Restart();
                 timeInCurrentStatus = 0.0f;
-            }
-        };
 
-        SerialHandler.OnHoldingNegative += () =>
-        {
-            if (timeInCurrentStatus >= IGNORE_INPUT_TIME)
-            {
-                if (game.status == GameParameters.Status.Splashdown) // 長押し＋着水
+                if (status == Status.Preparation)
                 {
-                    Debug.Log("CMD: Reset");
-                    EnterFlight = false;
-                    SettingMode = 2;
-                    SceneManager.LoadScene("FlightScene");
+                    flightStopwatch.Reset();
+                    context.Post(d => OnEnterPreparation?.Invoke(), null);
                 }
-                if (game.status == GameParameters.Status.Preparation)
+                else if (status == Status.Flight)
                 {
-                    Debug.Log("CMD: Start");
-                    EnterFlight = true;
-                    if (FlightSetting == null)
-                    {
-                        FlightSetting = GameObject.Find("FlightSetting");
-                    }
-                    if (FlightSetting != null)
-                    {
-                        FlightSettingActive = false;
-                        FlightSetting.SetActive(FlightSettingActive);
-                    }
-                    Time.timeScale=(float)Convert.ToInt32(!FlightSettingActive & !Landing);
+                    flightStopwatch.Restart();
+                    context.Post(d => OnEnterFlight?.Invoke(), null);
                 }
-                timeInCurrentStatus = 0.0f;
+                else if (status == Status.Splashdown)
+                {
+                    flightStopwatch.Stop();
+                    context.Post(d => OnSplashdown?.Invoke(), null);
+                }
+                else if (status == Status.Pause)
+                {
+                    flightStopwatch.Stop();
+                    context.Post(d => OnEnterPause?.Invoke(), null);
+                }
             }
-        };
-    }
 
-    // ===== 毎フレーム実行される ==============
-    private void Update()
-    {
-        GameParameters.Status prev = game.status;
-        
-        bool Setting = SettingActive || FlightSettingActive;
-        // ----- ゲームの状態を管理 -----
-        if (Setting == true && EnterFlight == false && Landing == false)
-        {
-            game.status = GameParameters.Status.Preparation;
+            timeInCurrentStatus = (float)statusStopwatch.Elapsed.TotalSeconds;
+            timeInFlight = (float)flightStopwatch.Elapsed.TotalSeconds;
         }
-        else if (Setting == false && EnterFlight == true && Landing == false)
-        {
-            game.status = GameParameters.Status.Flight;
-        }
-        else if (Setting == false && EnterFlight == true && Landing == true)
-        {
-            game.status = GameParameters.Status.Splashdown;
-        }
-
-        if (prev != game.status)
-        {
-            Debug.Log($"GameStatus: {game.status}");
-            timeInCurrentStatus = 0f;
-        }
-        else
-        {
-            timeInCurrentStatus += Time.unscaledDeltaTime;
-        }
-        // Debug.Log(timeInCurrentStatus);
-    }
-
-    public void FixedUpdate()
-    {
-        // ----- シミュレーションの実行 -----
     }
 }
