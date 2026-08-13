@@ -7,13 +7,11 @@ using UnityEngine.SceneManagement;
 public class SettingText : MonoBehaviour
 {
     private Text scoreText;
-    private AerodynamicCalculator script;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         scoreText = this.GetComponent<Text>();
-        script = GameManager.instance.Plane.GetComponent<AerodynamicCalculator>();
 
         RefreshText();
     }
@@ -21,7 +19,7 @@ public class SettingText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.instance.SettingMode == 1){
+        if(GameManager.instance.game.SettingMode == 1){
             RefreshText();
         }
     }
@@ -29,7 +27,7 @@ public class SettingText : MonoBehaviour
     void RefreshText()
     {
         scoreText.text = "\n";
-        scoreText.text += GameManager.instance.FlightMode+"\n\n";
+        scoreText.text += GameManager.instance.game.FlightMode+"\n\n";
 
         if(Config.MainCamera){
             scoreText.text += "FPS"+"\n\n";

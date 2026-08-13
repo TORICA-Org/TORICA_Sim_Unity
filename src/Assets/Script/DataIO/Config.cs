@@ -37,7 +37,7 @@ public static class Config
     // - （必要なら）値の妥当性を検査して、修正するためのメソッド（`Validate()`）
     // ---------------------------------------------------------------------
 
-    // 設定値の内部変数とアクセサ.  
+    // 設定値の内部変数とアクセサ.
 
     private static readonly string defaultAircraftModelName = "Tatsumi";
     private static string aircraftModelName = defaultAircraftModelName;
@@ -54,7 +54,23 @@ public static class Config
         get => aircraftDataName;
         set => SetProperty(ref aircraftDataName, value);
     }
-    
+
+    private static readonly float defaultOverridePilotMass = 0.0f;
+    private static float overridePilotMass = defaultOverridePilotMass;
+    public static float OverridePilotMass
+    {
+        get => overridePilotMass;
+        set => SetProperty(ref overridePilotMass, value);
+    }
+
+    private static readonly float defaultAudioVolume = 50;
+    private static float audioVolume = defaultAudioVolume;
+    public static float AudioVolume
+    {
+        get => audioVolume;
+        set => SetProperty(ref audioVolume, value);
+    }
+
     private static readonly bool defaultShowHUD = true;
     private static bool showHUD = defaultShowHUD;
     public static bool ShowHUD
@@ -87,20 +103,28 @@ public static class Config
         set => SetProperty(ref useMousePitchControl, value);
     }
 
-    private static readonly bool defaultVrOnlyMode = false;
-    private static bool vrOnlyMode = defaultVrOnlyMode;
-    public static bool VrOnlyMode
-    {
-        get => vrOnlyMode;
-        set => SetProperty(ref vrOnlyMode, value);
-    }
-
     private static readonly float defaultMouseSensitivity = 1.0f;
     private static float mouseSensitivity = defaultMouseSensitivity;
     public static float MouseSensitivity
     {
         get => mouseSensitivity;
         set => SetProperty(ref mouseSensitivity, value);
+    }
+
+    private static readonly bool defaultEnableDynamicPitchInertia = false;
+    private static bool enableDynamicPitchInertia = defaultEnableDynamicPitchInertia;
+    public static bool EnableDynamicPitchInertia
+    {
+        get => enableDynamicPitchInertia;
+        set => SetProperty(ref enableDynamicPitchInertia, value);
+    }
+
+    private static readonly bool defaultVrOnlyMode = false;
+    private static bool vrOnlyMode = defaultVrOnlyMode;
+    public static bool VrOnlyMode
+    {
+        get => vrOnlyMode;
+        set => SetProperty(ref vrOnlyMode, value);
     }
 
     private static readonly string defaultSerialPort = "None";
@@ -142,13 +166,13 @@ public static class Config
         get => exportLog;
         set => SetProperty(ref exportLog, value);
     }
-    
-    private static readonly float defaultWindMagnitude = 0.0f;
-    private static float windMagnitude = defaultWindMagnitude;
-    public static float WindMagnitude
+
+    private static readonly float defaultWindSpeed = 0.0f;
+    private static float windSpeed = defaultWindSpeed;
+    public static float WindSpeed
     {
-        get => windMagnitude;
-        set => SetProperty(ref windMagnitude, value);
+        get => windSpeed;
+        set => SetProperty(ref windSpeed, value);
     }
 
     private static readonly float defaultWindDirection = 0.0f;
@@ -306,19 +330,22 @@ public static class Config
 
             aircraftModelName = CheckContent("AircraftModelName", defaultAircraftModelName);
             aircraftDataName = CheckContent("AircraftDataName", defaultAircraftDataName);
+            overridePilotMass = CheckContent("OverridePilotMass", defaultOverridePilotMass);
+            audioVolume = CheckContent("AudioVolume", defaultAudioVolume);
             showHUD = CheckContent("ShowHUD", defaultShowHUD);
             showHorizontalLine = CheckContent("ShowHorizontalLine", defaultShowHorizontalLine);
             mainCamera = CheckContent("MainCamera", defaultMainCamera);
             useMousePitchControl = CheckContent("UseMousePitchControl", defaultUseMousePitchControl);
-            vrOnlyMode = CheckContent("VrOnlyMode", defaultVrOnlyMode);
             mouseSensitivity = CheckContent("MouseSensitivity", defaultMouseSensitivity);
+            enableDynamicPitchInertia = CheckContent("EnableDynamicPitchInertia", defaultEnableDynamicPitchInertia);
+            vrOnlyMode = CheckContent("VrOnlyMode", defaultVrOnlyMode);
             serialPort = CheckContent("SerialPort", defaultSerialPort);
             rudderZero = CheckContent("RudderZero", defaultRudderZero);
             rudderMax = CheckContent("RudderMax", defaultRudderMax);
             rudderReverse = CheckContent("RudderReverse", defaultRudderReverse);
             exportLog = CheckContent("ExportLog", defaultExportLog);
             randomizeWind = CheckContent("RandomizeWind", defaultRandomizeWind);
-            windMagnitude = CheckContent("WindMagnitude", defaultWindMagnitude);
+            windSpeed = CheckContent("WindSpeed", defaultWindSpeed);
             windDirection = CheckContent("WindDirection", defaultWindDirection);
             windRangeSpec = CheckContent("WindRangeSpec", defaultWindRangeSpec);
             takeoffSpeed = CheckContent("TakeoffSpeed", defaultTakeoffSpeed);
@@ -363,7 +390,7 @@ public static class Config
                 }
             }
         }
-        return defaultValue; // 見つからなかった場合は指定されたデフォルト値を返す. 
+        return defaultValue; // 見つからなかった場合は指定されたデフォルト値を返す.
     }
 
     // ===== `Config.txt`の内容を生成して書き込む ====================================
@@ -371,7 +398,7 @@ public static class Config
     {
         config.Clear();
         int linenumber = 1;
-        
+
         void newLine() => linenumber++; // Configの行を1つ進めるローカル関数
 
         void addConfig(string key, string value) // Configに設定を追加するローカル関数
@@ -412,6 +439,14 @@ public static class Config
         addConfig("AircraftDataName", AircraftDataName);
         newLine();
 
+        addString($"パイロットの体重の上書き[kg](初期値: {defaultOverridePilotMass:0.0})");
+        addConfig("OverridePilotMass", OverridePilotMass.ToString());
+        newLine();
+
+        addString($"オーディオの音量(初期値: {defaultAudioVolume:0.0})");
+        addConfig("AudioVolume", AudioVolume.ToString());
+        newLine();
+
         addString("飛行中の画面の周囲に情報を表示する(True/False)");
         addConfig("ShowHUD", ShowHUD.ToString());
         newLine();
@@ -430,6 +465,10 @@ public static class Config
 
         addString($"マウス感度を設定する(初期値: {defaultMouseSensitivity:0.0})");
         addConfig("MouseSensitivity", MouseSensitivity.ToString("0.0"));
+        newLine();
+
+        addString($"慣性モーメントを可変にする(初期値: {defaultEnableDynamicPitchInertia})");
+        addConfig("EnableDynamicPitchInertia", EnableDynamicPitchInertia.ToString());
         newLine();
 
         addString($"VR HMDによる重心移動を有効化する(初期値: {defaultVrOnlyMode})");
@@ -458,11 +497,11 @@ public static class Config
         addConfig("ExportLog", ExportLog.ToString());
         newLine();
 
-        addString($"風速[m/s](初期値: {defaultWindMagnitude:0.0})");
-        addConfig("WindMagnitude", WindMagnitude.ToString("0.0"));
+        addString($"風速[m/s](初期値: {defaultWindSpeed:0.0})");
+        addConfig("WindSpeed", WindSpeed.ToString("0.0"));
         newLine();
 
-        addString($"風上[deg](範囲: [L]-180.0 ↔ [R]180.0) / 初期値: {defaultWindDirection:0.0}");
+        addString($"風上[deg](範囲: [L]-180.0 ↔ [R]180.0 / 初期値: {defaultWindDirection:0.0})");
         addConfig("WindDirection", WindDirection.ToString("0.0"));
         newLine();
 

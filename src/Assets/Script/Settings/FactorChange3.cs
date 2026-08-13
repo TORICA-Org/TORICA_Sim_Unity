@@ -15,26 +15,26 @@ public class FactorChange3 : MonoBehaviour
     {
         CurrentSlider = GetComponent<Slider>();
         
-        if(GameManager.instance.SettingChanged){
-            CurrentSlider.value = GameManager.instance.massBackwardLeftFactor;
+        if(GameManager.instance.game.SettingChanged){
+            CurrentSlider.value = GameManager.instance.game.massBackwardLeftFactor;
         }else{
-            GameManager.instance.massBackwardLeftFactor = GameManager.instance.DefaultFactor;
+            GameManager.instance.game.massBackwardLeftFactor = GameManager.instance.game.DefaultFactor;
         }
     }
 
 
     void Update()
     {
-        if(CurrentSlider.value != GameManager.instance.massBackwardLeftFactor){
-            CurrentSlider.value = GameManager.instance.massBackwardLeftFactor;
+        if(CurrentSlider.value != GameManager.instance.game.massBackwardLeftFactor){
+            CurrentSlider.value = GameManager.instance.game.massBackwardLeftFactor;
         }
     }
 
 
     public void Method()
     {
-        GameManager.instance.massBackwardLeftFactor = CurrentSlider.value;
-        GameManager.instance.SettingChanged = true;
+        GameManager.instance.game.massBackwardLeftFactor = CurrentSlider.value;
+        GameManager.instance.game.SettingChanged = true;
     }
 
 }

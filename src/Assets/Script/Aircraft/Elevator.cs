@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
-    private AerodynamicCalculator script;
+    private AerodynamicParameters aero;
 
     // Start is called before the first frame update
     void Start()
     {
-        script = GameManager.instance.Plane.GetComponent<AerodynamicCalculator>();
+        aero = GameManager.instance.aero;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.localRotation  = Quaternion.AngleAxis(script.de, Vector3.forward);
+        transform.localRotation  = Quaternion.AngleAxis(aero.de, Vector3.forward);
     }
 }

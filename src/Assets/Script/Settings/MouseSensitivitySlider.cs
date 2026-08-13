@@ -13,7 +13,7 @@ public class MouseSensitivitySlider : MonoBehaviour
     {
         CurrentSlider = GetComponent<Slider>();
 
-        if(GameManager.instance.SettingChanged){
+        if(GameManager.instance.game.SettingChanged){
             CurrentSlider.value = Config.MouseSensitivity*10f;
         }else{
             Config.MouseSensitivity = CurrentSlider.value/10f;
@@ -29,6 +29,6 @@ public class MouseSensitivitySlider : MonoBehaviour
     public void Method()
     {
         Config.MouseSensitivity = CurrentSlider.value/10f;
-        GameManager.instance.SettingChanged = true;
+        GameManager.instance.game.SettingChanged = true;
     }
 }

@@ -18,7 +18,7 @@ public class Header : MonoBehaviour
     ColorBlock cb;
     
     void Start(){
-        switch(GameManager.instance.SettingMode){
+        switch(GameManager.instance.game.SettingMode){
             case 0:
                 cb = SettingMode0Button.colors;
                 cb.normalColor = new Color(0.7843137f,0.7843137f,0.7843137f,1f);
@@ -40,7 +40,7 @@ public class Header : MonoBehaviour
                 SettingMode3Button.colors = cb;
                 break;
         }
-        ChangeSettingMode(GameManager.instance.SettingMode);
+        ChangeSettingMode(GameManager.instance.game.SettingMode);
     }
 
     public void ChangeSettingMode(int ChangeMode){
@@ -51,7 +51,7 @@ public class Header : MonoBehaviour
                 SettingMode1.SetActive(false);
                 SettingMode2.SetActive(false);
                 SettingMode3.SetActive(false);
-                GameManager.instance.SettingMode = 0;
+                GameManager.instance.game.SettingMode = 0;
 
                 cb = SettingMode1Button.colors;
                 cb.normalColor = new Color(1f,1f,1f,1f);
@@ -70,7 +70,7 @@ public class Header : MonoBehaviour
                 SettingMode0.SetActive(false);
                 SettingMode2.SetActive(false);
                 SettingMode3.SetActive(false);
-                GameManager.instance.SettingMode = 1;
+                GameManager.instance.game.SettingMode = 1;
 
                 cb = SettingMode1Button.colors;
                 cb.normalColor = new Color(1f,1f,1f,1f);
@@ -89,7 +89,7 @@ public class Header : MonoBehaviour
                 SettingMode1.SetActive(false);
                 SettingMode0.SetActive(false);
                 SettingMode3.SetActive(false);
-                GameManager.instance.SettingMode = 2;
+                GameManager.instance.game.SettingMode = 2;
 
                 cb = SettingMode1Button.colors;
                 cb.normalColor = new Color(1f,1f,1f,1f);
@@ -108,7 +108,7 @@ public class Header : MonoBehaviour
                 SettingMode1.SetActive(false);
                 SettingMode2.SetActive(false);
                 SettingMode0.SetActive(false);
-                GameManager.instance.SettingMode = 3;
+                GameManager.instance.game.SettingMode = 3;
 
                 cb = SettingMode1Button.colors;
                 cb.normalColor = new Color(1f,1f,1f,1f);

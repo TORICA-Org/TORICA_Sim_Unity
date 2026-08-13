@@ -6,31 +6,29 @@ using UnityEngine.UI;
 public class TailSetDegSlider : MonoBehaviour
 {
     private Text scoreText;
-    private AerodynamicCalculator script;
     private Slider CurrentSlider;
 
     // Use this for initialization
     void Start()
     {
         scoreText = GameObject.Find("TailSetDeg").GetComponent<Text>();
-        script = GameManager.instance.Plane.GetComponent<AerodynamicCalculator>();
         CurrentSlider = GetComponent<Slider>();
 
-        if(GameManager.instance.SettingChanged){
-            CurrentSlider.value = GameManager.instance.TailSetDeg;
+        if(GameManager.instance.game.SettingChanged){
+            CurrentSlider.value = GameManager.instance.game.TailSetDeg;
         }else{
-            GameManager.instance.TailSetDeg = CurrentSlider.value;
+            GameManager.instance.game.TailSetDeg = CurrentSlider.value;
         }
-        
-        scoreText.text = GameManager.instance.TailSetDeg.ToString("0.000");
+
+        scoreText.text = GameManager.instance.game.TailSetDeg.ToString("0.000");
     }
 
     public void Method()
     {
         CurrentSlider.value = Mathf.Round(CurrentSlider.value / 0.5f) * 0.5f;
 
-        GameManager.instance.TailSetDeg = CurrentSlider.value;
-        scoreText.text = GameManager.instance.TailSetDeg.ToString("0.000");
-        GameManager.instance.SettingChanged = true;
+        GameManager.instance.game.TailSetDeg = CurrentSlider.value;
+        scoreText.text = GameManager.instance.game.TailSetDeg.ToString("0.000");
+        GameManager.instance.game.SettingChanged = true;
     }
 }

@@ -16,10 +16,10 @@ public class Rotation : MonoBehaviour
     void Update()
     {
         // Calculate rotation
-        float q1 = GameManager.instance.Plane.transform.rotation.x;
-        float q2 = -GameManager.instance.Plane.transform.rotation.y;
-        float q3 = -GameManager.instance.Plane.transform.rotation.z;
-        float q4 = GameManager.instance.Plane.transform.rotation.w;
+        float q1 = GameManager.instance.game.Plane.transform.rotation.x;
+        float q2 = -GameManager.instance.game.Plane.transform.rotation.y;
+        float q3 = -GameManager.instance.game.Plane.transform.rotation.z;
+        float q4 = GameManager.instance.game.Plane.transform.rotation.w;
         float C11 = q1*q1-q2*q2-q3*q3+q4*q4;
         float C22 = -q1*q1+q2*q2-q3*q3+q4*q4;
         float C12 = 2f*(q1*q2+q3*q4);

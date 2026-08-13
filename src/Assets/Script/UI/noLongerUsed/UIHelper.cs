@@ -34,7 +34,7 @@ public class UIHelper : MonoBehaviour
     public void InitUIHelper()
     {
         gm = GameManager.instance;
-        PlaneRigidbody = gm.Plane.GetComponent<Rigidbody>();
+        PlaneRigidbody = gm.game.Plane.GetComponent<Rigidbody>();
         basePanel = GameObject.Find("BasePanel");
     }
     */

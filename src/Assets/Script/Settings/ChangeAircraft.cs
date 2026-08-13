@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
+
 
 public class ChangeAircraft : MonoBehaviour
 {
-    private bool s=false;
     private bool sameLoad;
 
-    // Start is called before the first frame update
+    private GameObject LoadingTextObj;
+    private TMP_Text LoadingText;
+
+    private Dropdown AircraftDd;
+    string selectedvaluePre;
+
     public void OnEnables()
     {
-        Dropdown AircraftDdtmp; /*  */
         List<string> AircraftList = new List<string>();
 
         //Optionsに表示する文字列をリストに追加
@@ -33,43 +38,58 @@ public class ChangeAircraft : MonoBehaviour
 
         //DropdownコンポーネントのOptionsという項目にOptionsのリストがありました
         //それを編集するためにDropdownコンポーネントを取得
-        AircraftDdtmp = GetComponent<Dropdown>();
+        AircraftDd = GetComponent<Dropdown>();
 
         //一度すべてのOptionsをクリア
-        AircraftDdtmp.ClearOptions();
+        AircraftDd.ClearOptions();
 
         //リストを追加
-        AircraftDdtmp.AddOptions(AircraftList);
-        s=false;
+        AircraftDd.AddOptions(AircraftList);
 
-        //if(GameManager.instance.PlaneName == null){
-        //    GameManager.instance.PlaneName=DefaultPlane;
+        //if(GameManager.instance.game.PlaneName == null){
+        //    GameManager.instance.game.PlaneName=DefaultPlane;
         //}
-        if(GameManager.instance.PlaneName == GameManager.instance.DefaultPlane){
+        if(GameManager.instance.game.PlaneName == GameManager.instance.game.DefaultPlane){
             sameLoad=true;
         }
 
-        AircraftDdtmp.value = AircraftList.IndexOf(GameManager.instance.PlaneName);
+        AircraftDd.value = AircraftList.IndexOf(GameManager.instance.game.PlaneName);
     }
-    
-    public void OnSelected()
+
+    private void Start()
     {
-        if(s || GameManager.instance.FirstLoad || sameLoad){
-            Dropdown AircraftDdtmp;
+        LoadingTextObj = GameObject.Find("LoadingText");
+        LoadingText = LoadingTextObj.GetComponent<TMP_Text>();
+        LoadingText.text = "";
+    }
 
-            //DropdownコンポーネントをGet
-            AircraftDdtmp = GetComponent<Dropdown>();
-
-            //Dropdownコンポーネントから選択されている文字を取得
-            string selectedvalue = AircraftDdtmp.options[AircraftDdtmp.value].text;
-
-            GameManager.instance.PlaneName = selectedvalue;
-
-            Time.timeScale=1f;
-            SceneManager.LoadScene("FlightScene");
-        }else{
-            s=true;
+    private void Update()
+    {
+        if (LoadingTextObj == null)
+        {
+            LoadingTextObj = GameObject.Find("LoadingText");
+        }
+        if (LoadingTextObj != null && LoadingText == null)
+        {
+            LoadingText = LoadingTextObj.GetComponent<TMP_Text>();
         }
 
+        //DropdownコンポーネントをGet
+        if (AircraftDd == null)
+        {
+            AircraftDd = GetComponent<Dropdown>();
+        }
+
+        //Dropdownコンポーネントから選択されている文字を取得
+        string selectedvalue = AircraftDd.options[AircraftDd.value].text;
+        if (selectedvalue != selectedvaluePre && GameManager.instance.game.PlaneName != selectedvalue)
+        {
+            LoadingText.text = $"Loading {selectedvalue}...";
+            Debug.Log($"Loading {selectedvalue}...");
+            GameManager.instance.game.PlaneName = selectedvalue;
+            ModelInstantiater.InstantiateModel(GameManager.instance.game.PlaneName);
+            SceneManager.LoadScene("FlightScene");
+            selectedvaluePre = selectedvalue;
+        }
     }
 }

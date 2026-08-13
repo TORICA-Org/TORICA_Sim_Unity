@@ -24,7 +24,7 @@ static public class Wind
         if (loadedRangeSpec == "None")
         {
             direction = Config.WindDirection;
-            magnitude = Config.WindMagnitude;
+            magnitude = Config.WindSpeed;
             return;
         }
 
@@ -67,7 +67,7 @@ static public class Wind
             }
         }
     }
-   
+
     public static float GetDirection(float distance)
     {
         ParseRangeSpec(distance);

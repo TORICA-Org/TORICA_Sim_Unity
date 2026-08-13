@@ -6,18 +6,18 @@ using UnityEngine.UI;
 public class LoadFactor : MonoBehaviour
 {
     private Text scoreText;
-    private AerodynamicCalculator script;
-    
+    private AerodynamicParameters aero;
+
     // Start is called before the first frame update
     void Start()
     {
         scoreText = this.GetComponent<Text>();
-        script = GameManager.instance.Plane.GetComponent<AerodynamicCalculator>();
+        aero = GameManager.instance.aero;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        scoreText.text = script.Airspeed.ToString("0.000");
+        scoreText.text = aero.Airspeed.ToString("0.000");
     }
 }

@@ -7,25 +7,26 @@ using UnityEngine.UI;
 public class GustDirectionSlider : MonoBehaviour
 {
     private Text scoreText;
-    private AerodynamicCalculator script;
     private Slider CurrentSlider;
-    private GameManager gm = GameManager.instance;
+    private GameManager gm;
 
     // Use this for initialization
     void Start()
     {
+        gm = GameManager.instance;
+
         scoreText = GameObject.Find("GustDirection").GetComponent<Text>();
-        script = gm.Plane.GetComponent<AerodynamicCalculator>();
         CurrentSlider = GetComponent<Slider>();
 
-        if(gm.SettingChanged){
+        //Debug.Log(gm.game.SettingChanged);
+        if(gm.game.SettingChanged){
             CurrentSlider.value = Config.WindDirection/15f;
         }else{
             Config.WindDirection = CurrentSlider.value*15f;
         }
 
         Method();
-        
+
     }
 
     // Update is called once per frame
@@ -53,6 +54,6 @@ public class GustDirectionSlider : MonoBehaviour
         }
         scoreText.text = DirectionText + Mathf.Abs(Config.WindDirection).ToString("0");
 
-        gm.SettingChanged = true;
+        gm.game.SettingChanged = true;
     }
 }

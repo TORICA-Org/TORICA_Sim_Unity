@@ -7,22 +7,22 @@ using UnityEngine.UI;
 public class TailRotationSlider : MonoBehaviour
 {
     private Text scoreText;
-    private AerodynamicCalculator script;
+    private AerodynamicParameters aero;
     private Slider CurrentSlider;
 
     // Use this for initialization
     void Start()
     {
         scoreText = GameObject.Find("TailRotation").GetComponent<Text>();
-        script = GameManager.instance.Plane.GetComponent<AerodynamicCalculator>();
+        aero = GameManager.instance.aero;
         CurrentSlider = GetComponent<Slider>();
 
-        if(GameManager.instance.SettingChanged){
+        if(GameManager.instance.game.SettingChanged){
             CurrentSlider.value = Config.TakeoffPitch;
         }else{
             Config.TakeoffPitch = CurrentSlider.value;
         }
-        
+
         scoreText.text = Config.TakeoffPitch.ToString("0.000");
     }
 
@@ -30,9 +30,9 @@ public class TailRotationSlider : MonoBehaviour
     {
         Config.TakeoffPitch = CurrentSlider.value;
         scoreText.text = Config.TakeoffPitch.ToString("0.000");
-        GameManager.instance.SettingChanged = true;
+        GameManager.instance.game.SettingChanged = true;
         //script.transform.rotation = Quaternion.Euler(0.0f, GameManager.instance.StartRotation, Config.TakeoffPitch);
-        script.transform.rotation = Quaternion.Euler(Config.TakeoffRoll, Config.TakeoffYaw, Config.TakeoffPitch);
+        aero.Aircraft.transform.rotation = Quaternion.Euler(Config.TakeoffRoll, Config.TakeoffYaw, Config.TakeoffPitch);
 
 
     }

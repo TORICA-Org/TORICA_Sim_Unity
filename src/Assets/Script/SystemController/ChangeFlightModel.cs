@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +9,11 @@ public class ChangeFlightModel : MonoBehaviour
 {
     private bool s=false;
     private bool sameLoad;
-    
+
     // Start is called before the first frame update
     public void OnEnables()
     {
-        Dropdown FlightModelDdtmp; /*  */
+        Dropdown FlightModelDdtmp;
         List<string> FlightModelList = new List<string>();
 
         //Optionsに表示する文字列をリストに追加
@@ -31,19 +32,19 @@ public class ChangeFlightModel : MonoBehaviour
         FlightModelDdtmp.AddOptions(FlightModelList);
         s=false;
 
-        //if(GameManager.instance.PlaneName == null){
-        //    GameManager.instance.PlaneName=DefaultPlane;
+        //if(GameManager.instance.game.PlaneName == null){
+        //    GameManager.instance.game.PlaneName=DefaultPlane;
         //}
-        if(GameManager.instance.FlightModel == GameManager.instance.DefaultFlightModel){
+        if(GameManager.instance.game.FlightModel == GameManager.instance.game.DefaultFlightModel){
             sameLoad=true;
         }
 
-        FlightModelDdtmp.value = FlightModelList.IndexOf(GameManager.instance.FlightModel);
+        FlightModelDdtmp.value = FlightModelList.IndexOf(GameManager.instance.game.FlightModel);
     }
-    
+
     public void OnSelected()
     {
-        if(s || GameManager.instance.FirstLoad || sameLoad){
+        if(s || GameManager.instance.game.FirstLoad || sameLoad){
             Dropdown FlightModelDdtmp;
 
             //DropdownコンポーネントをGet
@@ -52,7 +53,7 @@ public class ChangeFlightModel : MonoBehaviour
             //Dropdownコンポーネントから選択されている文字を取得
             string selectedvalue = FlightModelDdtmp.options[FlightModelDdtmp.value].text;
 
-            GameManager.instance.FlightModel = selectedvalue;
+            GameManager.instance.game.FlightModel = selectedvalue;
 
             Time.timeScale=1f;
             SceneManager.LoadScene("FlightScene");
@@ -62,3 +63,4 @@ public class ChangeFlightModel : MonoBehaviour
 
     }
 }
+*/

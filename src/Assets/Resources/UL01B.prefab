@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 6674114683048218070}
   - component: {fileID: 6674114683048218064}
   m_Layer: 6
-  m_Name: Tail
+  m_Name: Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 8677453055866228934}
   - component: {fileID: 8677453055866228935}
   m_Layer: 6
-  m_Name: Fin
+  m_Name: Rudder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

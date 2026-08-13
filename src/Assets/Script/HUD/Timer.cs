@@ -6,26 +6,25 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     private Text timeText;//Textコンポーネントを保持するための変数
-    float timeValue = 0.0f;
+    private GameManager gm;
 
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameManager.instance;
         timeText = GameObject.Find("TimeValue").GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.FlightSettingActive)
+        if (GameManager.instance.game.status == GameParameters.Status.Preparation)
         {
-            timeValue = 0.0f;
             timeText.text = "0.00";
         }
         else
         {
-            timeValue += Time.deltaTime;
-            timeText.text = timeValue.ToString("0.00");
+            timeText.text = gm.game.timeInFlight.ToString("0.00");
         }
     }
 }

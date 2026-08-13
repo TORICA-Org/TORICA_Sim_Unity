@@ -9,40 +9,32 @@ public class FlightSettingController : MonoBehaviour
 {
     private GameObject FlightSetting;
     private SaveCsvScript SaveCsvScript;
-    private AerodynamicCalculator script;//AerodynamicCalculatorスクリプトにアクセスするための変数
     private bool OnStartTrigger;
-    private GameManager gm = GameManager.instance;
 
     // Start is called before the first frame update
-    
+
     public void OnEnables()
     {
         FlightSetting = GameObject.Find("FlightSetting");
 
-        GameManager.instance.FlightSettingActive = true;
-        FlightSetting.SetActive(GameManager.instance.FlightSettingActive);
-                
-        Time.timeScale=(float)Convert.ToInt32(!GameManager.instance.FlightSettingActive &!GameManager.instance.SettingActive & !GameManager.instance.Landing);
+        FlightSetting.SetActive(true);
     }
-    
+
     void Start()
     {
-        script = GameManager.instance.Plane.GetComponent<AerodynamicCalculator>();
-
+        GameManager.instance.game.status = GameParameters.Status.Preparation;
         SaveCsvScript = this.GetComponent<SaveCsvScript>();
     }
 
     void Update()
     {
-        // if(-0.5f >= ((gm.serial.rudderRaw-GameManager.instance.JoyStick0)/GameManager.instance.JoyStickFactor) && ((gm.serial.rudderRaw-GameManager.instance.JoyStick0)/GameManager.instance.JoyStickFactor) >= -1.0f && !GameManager.instance.EnterFlight){
+        // if(-0.5f >= ((gm.serial.rudderRaw-GameManager.instance.game.JoyStick0)/GameManager.instance.game.JoyStickFactor) && ((gm.serial.rudderRaw-GameManager.instance.game.JoyStick0)/GameManager.instance.game.JoyStickFactor) >= -1.0f && !GameManager.instance.game.EnterFlight){
             // OnStartTrigger = true;
         // }
 
-        if( (Input.GetButtonDown("StartButton") || OnStartTrigger) && !GameManager.instance.EnterFlight){
-            GameManager.instance.EnterFlight = true;
-            GameManager.instance.FlightSettingActive = !GameManager.instance.FlightSettingActive;
-            FlightSetting.SetActive(GameManager.instance.FlightSettingActive);
-            Time.timeScale=(float)Convert.ToInt32(!GameManager.instance.FlightSettingActive & !GameManager.instance.Landing);
+        if( (Input.GetButtonDown("StartButton") || OnStartTrigger) && GameManager.instance.game.status != GameParameters.Status.Flight){
+            GameManager.instance.game.status = GameParameters.Status.Flight;
+            FlightSetting.SetActive(false);
             SaveCsvScript.SetFile();
             // OnStartTrigger = false;
         }

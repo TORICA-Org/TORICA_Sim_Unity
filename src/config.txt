@@ -11,6 +11,12 @@ AircraftModelName = Tatsumi
 // --------------------------------------------------------
 AircraftDataName = REWRITE_シミュデータ
 
+// パイロットの体重の上書き[kg](初期値: 0.0)
+OverridePilotMass = 60
+
+// オーディオの音量(初期値: 50.0)
+AudioVolume = 60
+
 // 飛行中の画面の周囲に情報を表示する(True/False)
 ShowHUD = True
 
@@ -21,10 +27,13 @@ ShowHorizontalLine = False
 MainCamera = True
 
 // マウスによる重心移動を有効化する(True/False)
-UseMousePitchControl = False
+UseMousePitchControl = True
 
 // マウス感度を設定する(初期値: 1.0)
 MouseSensitivity = 1.0
+
+// 慣性モーメントを可変にする(初期値: False)
+EnableDynamicPitchInertia = True
 
 // VR HMDによる重心移動を有効化する(初期値: False)
 VrOnlyMode = False
@@ -32,7 +41,7 @@ VrOnlyMode = False
 // シリアルポートの名前(初期値: None)
 // (Windowsでは`COM1`など，Macでは`/dev/tty.usbmodem1421`など)
 // 候補：None
-SerialPort = com6
+SerialPort = com25
 
 // ニュートラルにおけるラダー入力値(初期値: 7500.0)
 RudderZero = 7500.0
@@ -47,9 +56,9 @@ RudderReverse = True
 ExportLog = False
 
 // 風速[m/s](初期値: 0.0)
-WindMagnitude = 0.0
+WindSpeed = 0.0
 
-// 風上[deg](範囲: [L]-180.0 ↔ [R]180.0) / 初期値: 0.0
+// 風上[deg](範囲: [L]-180.0 ↔ [R]180.0 / 初期値: 0.0)
 WindDirection = 0.0
 
 // 風の範囲指定(※「風速」「風上」の設定を上書きします / 初期値: None)
@@ -62,7 +71,7 @@ WindDirection = 0.0
 WindRangeSpec = None
 
 // 離陸時のスピード[m/s](初期値: 6.5)
-TakeoffSpeed = 6.5
+TakeoffSpeed = 5.8
 
 // 離陸時のロール[deg](初期値: 0.0)
 TakeoffRoll = 0.0
@@ -75,15 +84,6 @@ TakeoffYaw = 0.0
 
 // 定常風をランダム化する(True/False)
 RandomizeWind = False
-
-
-
-
-
-
-
-
-
 
 
 

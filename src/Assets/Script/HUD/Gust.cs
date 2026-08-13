@@ -6,20 +6,20 @@ using UnityEngine.UI;
 public class Gust : MonoBehaviour
 {
     private Text scoreText;
-    private AerodynamicCalculator script;
+    private AerodynamicParameters aero;
 
     // Start is called before the first frame update
     void Start()
     {
         scoreText = this.GetComponent<Text>();
-        script = GameManager.instance.Plane.GetComponent<AerodynamicCalculator>();
+        aero = GameManager.instance.aero;
     }
 
     // Update is called once per frame
     void Update()
     {
         string DirectionText;
-        if (script.LocalGustDirection >= 0)
+        if (aero.LocalGustDirection >= 0)
         {
           DirectionText = "R ";
         }
@@ -27,10 +27,10 @@ public class Gust : MonoBehaviour
         {
           DirectionText = "L ";
         }
-        DirectionText += Mathf.Abs(script.LocalGustDirection).ToString("0");
+        DirectionText += Mathf.Abs(aero.LocalGustDirection).ToString("0");
 
-        scoreText.text = 
-            "\n" + script.LocalGustMag.ToString("0.000") + " m/s"
+        scoreText.text =
+            "\n" + aero.LocalGustMag.ToString("0.000") + " m/s"
             + "\n" + DirectionText + " deg";
     }
 }
